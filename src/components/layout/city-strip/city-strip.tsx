@@ -4,7 +4,7 @@ import { cities } from "./city-list"
 export function CityStrip() {
   return (
     <section className="w-full py-8">
-      <div className="mx-auto max-w-7xl px-4">
+      <div className="max-w-7xl px-4">
         <h2 className="mb-6 text-2xl font-bold">
           Select Location
         </h2>

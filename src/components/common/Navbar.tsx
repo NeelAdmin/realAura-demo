@@ -21,9 +21,9 @@ export function Navbar() {
         }
     }, [])
     return (
-        <div className="flex flex-col items-start gap-2 ">
+        <div className="flex flex-col items-start gap-2">
         <header className={"w-full border-b border-border " + (mobile ? "bg-black" : "bg-background")}>
-            <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4">
+            <div className="flex h-20 max-w-7xl items-center justify-between px-4">
                 <div className="flex items-center gap-4">
                     <Logo mobile={mobile} />
                 </div>

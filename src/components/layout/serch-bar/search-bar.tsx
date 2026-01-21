@@ -5,7 +5,7 @@ import { MobileFilters } from "./mobile-filters"
 export function SearchBar() {
     return (
         <section className="w-full bg-white py-6">
-            <div className="flex flex-col items-center gap-4 max-w-6xl mx-auto px-4">
+            <div className="flex flex-col items-center gap-4 max-w-6xl px-4">
                 {/* Search Bar */}
                 <div className="w-full">
                     <SearchInput />

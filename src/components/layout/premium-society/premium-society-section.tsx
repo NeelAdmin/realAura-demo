@@ -5,7 +5,7 @@ import { MoveUpRight } from "lucide-react"
 export function PremiumSocietySection() {
   return (
     <section className="w-full py-6">
-      <div className="mx-auto max-w-7xl px-4">
+      <div className="max-w-7xl px-4">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-lg font-bold">
             Premium Society in Bengaluru
