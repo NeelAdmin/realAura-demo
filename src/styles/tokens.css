@@ -1,0 +1,25 @@
+:root {
+  --background: #ffffff;
+  --foreground: #000000;
+
+  --primary: #000000;
+  --secondary-start: #c99300;
+  --secondary-end: #f4b400;
+
+  --muted: #f1f5f9;
+  --border: #e2e8f0;
+
+  --white: #ffffff;
+
+  --radius-lg: 12px;
+  --radius-md: 8px;
+  --radius-sm: 4px;
+
+  --font-sans: "Inter", system-ui, sans-serif;
+
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-md: 16px;
+  --text-lg: 18px;
+  --text-xl: 22px;
+}
