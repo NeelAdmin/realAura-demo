@@ -18,8 +18,8 @@ export function Footer() {
         }
     }, [])
     return (
-        <footer className="bg-black text-white w-full">
-            <div className="max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+        <footer className="bg-black text-white">
+            <div className="px-10 py-12">
                 <div className="mb-8 lg:mb-12">
                     <div className="flex items-center space-x-2 ">
                         {!mobile && <Image src={"/images/logo.png"} alt="Logo" width={150} height={43} />}

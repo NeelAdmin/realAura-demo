@@ -10,13 +10,7 @@ type Props = {
 export function PropertyCard({ property }: Props) {
   return (
     <div
-      className="
-        bg-white overflow-hidden
-
-        w-full
-
-        rounded-md shadow-sm
-      "
+      className="overflow-hidden w-full rounded-md"
     >
       <div className="p-2 lg:hidden">
         <h3 className="text-sm font-semibold whitespace-nowrap">
@@ -37,14 +31,15 @@ export function PropertyCard({ property }: Props) {
         </div>
       </div>
 
-      <div className="relative">
+      <div className="relative w-full sm:w-full lg:w-auto">
         <Image
           src={property.image}
           alt={property.name}
           width={597}
           height={365}
-          className="object-contain"
+          className="object-contain w-full h-auto"
           priority
+          
         />
 
         <button className="absolute right-3 top-3 rounded-full p-2">
@@ -122,7 +117,7 @@ export function PropertyCard({ property }: Props) {
 
 
         {/* META */}
-        <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+        <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-1 text-[13px]">
           <span className="flex items-center gap-1">
             <Image src="/images/area.svg" alt="Area" width={14} height={14} />
             {property.sqft}
@@ -133,16 +128,19 @@ export function PropertyCard({ property }: Props) {
             {property.floor}
           </span>
 
-          <span className="flex items-center gap-1">
+          <span className="flex items-center gap-1 whitespace-nowrap truncate">
             <Image src="/images/furnished.svg" alt="Furnished" width={14} height={14} />
             {property.furnishedType}
           </span>
 
-          <span className="flex items-center gap-1">
+          <span className="flex items-center gap-1 whitespace-nowrap truncate">
             <Image src="/images/available.svg" alt="Open Time" width={14} height={14} />
             {property.availableTime}
           </span>
         </div>
+
+
+        
 
         {/* CTA */}
         {property.openTime && (

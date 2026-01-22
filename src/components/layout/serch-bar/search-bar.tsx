@@ -4,8 +4,8 @@ import { MobileFilters } from "./mobile-filters"
 
 export function SearchBar() {
     return (
-        <section className="w-full bg-white py-6">
-            <div className="flex flex-col items-center gap-4 max-w-6xl px-4">
+        <section className="w-full bg-white py-6 flex justify-center">
+            <div className="flex flex-col items-center gap-4 max-w-7xl w-full px-4">
                 {/* Search Bar */}
                 <div className="w-full">
                     <SearchInput />
