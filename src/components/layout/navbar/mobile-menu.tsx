@@ -1,11 +1,17 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { AppButton } from "@/components/ui/AppButton"
-import Image from "next/image"
+import { useState } from "react";
+import { AppButton } from "@/components/ui/AppButton";
+import Image from "next/image";
 
-export function MobileMenu() {
-  const [open, setOpen] = useState(false)
+export function MobileMenu({
+  setIsOpen,
+  setIsPostPopupOpen,
+}: {
+  setIsOpen: (open: boolean) => void;
+  setIsPostPopupOpen: (open: boolean) => void;
+}) {
+  const [open, setOpen] = useState(false);
 
   return (
     <>
@@ -13,13 +19,14 @@ export function MobileMenu() {
         <AppButton
           label="Post Property"
           className="h-9 px-3 text-sm font-medium text-white"
+          onClick={() => setIsPostPopupOpen(true)}
         />
 
         <button
           onClick={() => setOpen(true)}
           className="flex h-10 w-10 flex-col items-center justify-center gap-1"
         >
-         <Image src="/images/hamburg.png" alt="Menu" width={24} height={24} />
+          <Image src="/images/hamburg.png" alt="Menu" width={24} height={24} />
         </button>
       </div>
 
@@ -38,10 +45,12 @@ export function MobileMenu() {
             <a className="text-lg font-medium">Rent</a>
             <a className="text-lg font-medium">Sell</a>
             <a className="text-lg font-medium">Upcoming Projects</a>
-            <a className="text-lg font-medium">Login</a>
+            <a className="text-lg font-medium" onClick={() => setIsOpen(true)}>
+              Login
+            </a>
           </nav>
         </div>
       )}
     </>
-  )
+  );
 }
