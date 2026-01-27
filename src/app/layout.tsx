@@ -13,7 +13,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="bg-background text-foreground font-sans">
         <Navbar />
-        <SearchBar />
         {children}
         <Footer />
       </body>
