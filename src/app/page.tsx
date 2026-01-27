@@ -10,24 +10,14 @@ import { PremiumSocietySection } from "@/components/layout/premium-society/premi
 export default function Page() {
   return (
     <>
-      <div className="flex justify-center w-full lg:px-10 px-0">
+      <div className="flex w-full justify-center px-0 lg:px-10">
         <div className="w-full">
-         
           <CityStrip />
-          <PropertySection
-            title="Scheduled Visit"
-            properties={scheduledVisit}
-          />
+          <PropertySection title="Scheduled Visit" properties={scheduledVisit} />
 
-          <PropertySection
-            title="Top Properties in Sarjapura"
-            properties={sarjapura}
-          />
+          <PropertySection title="Top Properties in Sarjapura" properties={sarjapura} />
 
-          <PropertySection
-            title="Top Properties in Velendur"
-            properties={velendur}
-          />
+          <PropertySection title="Top Properties in Velendur" properties={velendur} />
           <PremiumSocietySection />
         </div>
       </div>

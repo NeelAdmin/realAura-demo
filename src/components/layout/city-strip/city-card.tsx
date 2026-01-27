@@ -1,39 +1,26 @@
-import { City } from "./city-list"
-import Image from "next/image"
+import { City } from "./city-list";
+import Image from "next/image";
 
 type CityCardProps = {
-    city: City
-}
+  city: City;
+};
 
 export function CityCard({ city }: CityCardProps) {
-    return (
-        <div
-              className="
-        flex flex-col items-center gap-2
-        bg-muted transition-transform duration-200
-        hover:scale-105
-        min-w-[30%] rounded-[5px] p-2
-        sm:min-w-[160px] sm:p-3
-        lg:min-w-[120px] lg:py-4 lg:px-2
-      "
-        >
-            <div className="flex h-14 w-14 items-center justify-center rounded-[5px] bg-muted">
-                <Image
-                    src={city.image}
-                    alt={city.name}
-                    width={24}
-                    height={24}
-                    className="h-14 w-14 object-cover"
-                />
-            </div>
+  return (
+    <div className="flex h-[90px] w-[80px] flex-col items-center gap-[5px] rounded-[5px] bg-[#F7F7F7] p-[8px] transition-transform duration-200 hover:scale-105 lg:h-[130px] lg:w-[158px] lg:gap-[9px] lg:rounded-[12px] lg:px-[10px] lg:py-[15px]">
+      <div className="flex h-[49px] w-[57px] items-center justify-center lg:h-[74px] lg:w-[80px]">
+        <Image
+          src={city.image}
+          alt={city.name}
+          width={80}
+          height={74}
+          className="h-full w-full object-contain"
+        />
+      </div>
 
-            <span className="
-          font-medium text-primary
-          text-xs
-          sm:text-sm
-        ">
-                {city.name}
-            </span>
-        </div>
-    )
+      <span className="font-sfui text-primary text-center text-[15px] leading-none font-semibold">
+        {city.name}
+      </span>
+    </div>
+  );
 }

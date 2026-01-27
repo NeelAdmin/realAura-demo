@@ -8,14 +8,10 @@ export const metadata = {
   description: "Real estate platform",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="font-sans bg-background text-foreground">
+      <body className="bg-background text-foreground font-sans">
         <Navbar />
         <SearchBar />
         {children}

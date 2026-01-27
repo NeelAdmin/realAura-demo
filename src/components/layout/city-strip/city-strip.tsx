@@ -3,30 +3,22 @@ import { cities } from "./city-list";
 
 export function CityStrip() {
   return (
-    <section className="w-full py-8 px-5 lg:px-0">
-      <h2 className="mb-6 text-2xl font-bold">select Location</h2>
-
-      <div
-        className="
-            flex gap-4 overflow-x-auto overflow-y-hidden
-            scrollbar-hide
-
-            snap-x snap-mandatory
-
-            lg:snap-none
-          "
-      >
+    <section className="w-full px-5 py-8 lg:px-0">
+      <h2 className="font-sfui mb-6 text-[16px] leading-none font-medium md:text-[30px] md:font-semibold">
+        Select Location
+      </h2>
+      <div className="scrollbar-hide flex gap-[32px] overflow-x-auto overflow-y-hidden lg:gap-[10px]">
         {cities.map((city) => (
-          <div key={city.id} className="snap-center lg:snap-none">
+          <div key={city.id}>
             <CityCard city={city} />
           </div>
         ))}
       </div>
 
       <div className="mt-6 flex justify-center gap-2 lg:hidden">
-        <span className="h-3 w-3 rounded-full bg-border" />
-        <span className="h-3 w-3 rounded-full bg-border" />
-        <span className="h-3 w-3 rounded-full bg-border" />
+        <span className="bg-border h-3 w-3 rounded-full" />
+        <span className="bg-border h-3 w-3 rounded-full" />
+        <span className="bg-border h-3 w-3 rounded-full" />
       </div>
     </section>
   );

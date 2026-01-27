@@ -4,21 +4,16 @@ import { MoveUpRight } from "lucide-react";
 
 export function PremiumSocietySection() {
   return (
-    <section className="w-full py-6 px-5 lg:px-0">
+    <section className="w-full px-5 py-6 lg:px-0">
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-bold">Premium Society in Bengaluru</h2>
-        <button className="hidden lg:flex text-xs font-medium items-center gap-1">
+        <h2 className="text-[20px] font-bold md:text-[30px]">Premium Society in Bengaluru</h2>
+        <button className="hidden items-center gap-1 text-xs font-medium lg:flex">
           See All Society
           <MoveUpRight size={14} />
         </button>
       </div>
 
-      <div
-        className="
-            flex gap-4 overflow-x-auto
-            lg:grid lg:grid-cols-4 lg:gap-6
-          "
-      >
+      <div className="flex gap-4 overflow-x-auto lg:grid lg:grid-cols-4 lg:gap-6">
         {premiumSocieties.map((society) => (
           <PremiumSocietyCard key={society.id} society={society} />
         ))}
