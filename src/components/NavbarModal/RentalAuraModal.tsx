@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircle, XCircle } from "lucide-react";
+import { Crown, KeyRound } from "lucide-react";
 import Link from "next/link";
 
 interface RentalAuraPopupProps {
@@ -41,7 +41,7 @@ export default function RentalAuraPopup({
               text-[22px]
               sm:text-[28px]
               lg:text-[36px]
-              font-semibold
+              font-bold
               text-[#0F172A]
             "
           >
@@ -60,30 +60,37 @@ export default function RentalAuraPopup({
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-12">
           <Link href="/select-role/owner" onClick={onClose}>
             <div
               className="
                 h-full
                 bg-white
                 rounded-2xl
-                px-6 py-8
-                sm:px-8 sm:py-10
+                sm:rounded-3xl
+                px-6 py-10
+                sm:px-8 sm:py-12
+                md:px-10 md:py-14
+                lg:px-12 lg:py-16
                 text-center
-                shadow-sm
-                transition
-                hover:shadow-md
+                border border-gray-100
+                shadow-lg
+                hover:shadow-xl
+                transition-all
+                duration-300
                 hover:scale-[1.02]
+                cursor-pointer
               "
             >
-              <div className="mx-auto mb-5 flex h-14 w-14 sm:h-18 sm:w-18 items-center justify-center rounded-full border">
-                <CheckCircle className="h-8 w-8 sm:h-9 sm:w-9 text-green-500" />
+              <div className="mx-auto mb-6 sm:mb-8 flex h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24 items-center justify-center rounded-full bg-gradient-to-br from-yellow-100 to-amber-50 shadow-lg shadow-black/15">
+                <Crown className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 text-yellow-600 drop-shadow-sm drop-shadow-black/20" />
               </div>
 
-              <h3 className="text-[18px] sm:text-[20px] lg:text-[22px] font-semibold text-[#0F172A]">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">
                 Asset Owner
               </h3>
-              <p className="mt-2 text-[14px] sm:text-[15px] text-[#64748B] leading-relaxed">
+
+              <p className="text-sm sm:text-base md:text-lg text-gray-500 leading-relaxed">
                 Post a verified performance ledger for your tenant.
               </p>
             </div>
@@ -95,23 +102,30 @@ export default function RentalAuraPopup({
                 h-full
                 bg-white
                 rounded-2xl
-                px-6 py-8
-                sm:px-8 sm:py-10
+                sm:rounded-3xl
+                px-6 py-10
+                sm:px-8 sm:py-12
+                md:px-10 md:py-14
+                lg:px-12 lg:py-16
                 text-center
-                shadow-sm
-                transition
-                hover:shadow-md
+                border border-gray-100
+                shadow-lg
+                hover:shadow-xl
+                transition-all
+                duration-300
                 hover:scale-[1.02]
+                cursor-pointer
               "
             >
-              <div className="mx-auto mb-5 flex h-14 w-14 sm:h-18 sm:w-18 items-center justify-center rounded-full border">
-                <XCircle className="h-8 w-8 sm:h-9 sm:w-9 text-red-500" />
+              <div className="mx-auto mb-6 sm:mb-8 flex h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24 items-center justify-center rounded-full bg-gradient-to-br from-yellow-100 to-amber-50 shadow-lg shadow-black/15">
+                <KeyRound className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 text-yellow-600 drop-shadow-sm drop-shadow-black/20" />
               </div>
 
-              <h3 className="text-[18px] sm:text-[20px] lg:text-[22px] font-semibold text-[#0F172A]">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">
                 Premium Tenant
               </h3>
-              <p className="mt-2 text-[14px] sm:text-[15px] text-[#64748B] leading-relaxed">
+
+              <p className="text-sm sm:text-base md:text-lg text-gray-500 leading-relaxed">
                 Build your reputation and rate the property owner.
               </p>
             </div>
