@@ -8,7 +8,7 @@ type Props = {
 
 export function PropertySection({ title, properties }: Props) {
   return (
-    <section className="w-full py-6">
+    <section className="w-full py-4 md:py-8">
       <div className="mb-4 hidden items-center justify-between lg:flex">
         <h2 className="text-[30px] font-semibold">{title}</h2>
         <a href="#" className="flex items-center gap-1 text-xs font-medium">

@@ -31,21 +31,18 @@ export function MobileMenu({
       </div>
 
       {open && (
-        <div className="fixed inset-0 z-50 bg-background p-6">
+        <div className="bg-background fixed inset-0 z-50 p-6">
           <div className="flex justify-end">
-            <button
-              onClick={() => setOpen(false)}
-              className="text-lg font-bold"
-            >
+            <button onClick={() => setOpen(false)} className="text-lg font-bold">
               ✕
             </button>
           </div>
 
           <nav className="mt-10 flex flex-col gap-6">
-            <a className="text-lg font-medium">Rent</a>
-            <a className="text-lg font-medium">Sell</a>
-            <a className="text-lg font-medium">Upcoming Projects</a>
-            <a className="text-lg font-medium" onClick={() => setIsOpen(true)}>
+            <a className="text-lg font-bold">Rent</a>
+            <a className="text-lg font-bold">Sell</a>
+            <a className="text-lg font-bold">Upcoming Projects</a>
+            <a className="text-lg font-bold" onClick={() => setIsOpen(true)}>
               Login
             </a>
           </nav>

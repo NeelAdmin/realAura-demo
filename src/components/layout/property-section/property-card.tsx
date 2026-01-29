@@ -11,17 +11,17 @@ export function PropertyCard({ property }: Props) {
   return (
     <div className="w-full overflow-hidden rounded-md">
       <div className="p-2 lg:hidden">
-        <h3 className="text-sm font-semibold whitespace-nowrap">{property.name}</h3>
+        <h3 className="text-sm font-bold whitespace-nowrap">{property.name}</h3>
 
         <div className="text-secondary flex items-center gap-1 text-xs">
           <Image
-            src="/images/location.svg"
+            src="/images/home-page/location-yellow.png"
             alt="Location"
             width={12}
             height={15}
             className="shrink-0"
           />
-          <p className="leading-none">{property.location}</p>
+          <p className="text-semibold leading-none">{property.location}</p>
         </div>
       </div>
 
@@ -57,27 +57,27 @@ export function PropertyCard({ property }: Props) {
       <div className="flex w-full justify-between bg-[#4DC7EC] px-2 py-2 text-xs font-semibold text-white lg:hidden">
         <div className="flex items-center gap-1 text-[15px]">{property.price}/m</div>
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-3">
           <Image src="/images/calender.svg" alt="Calendar" width={20} height={18.51} />
-          <p className="text-[15px] font-light">25/12/2025</p>
+          <p className="text-[15px] font-bold">25/12/2025</p>
         </div>
       </div>
       <div className="flex w-full justify-between bg-[#E6E7EB] px-2 py-2 text-xs font-semibold text-white lg:hidden">
-        <span className="flex items-center gap-1 text-[#4C5564]">
+        <span className="flex items-center gap-1 font-bold text-[#000000]">
           <Image src="/images/furnished.svg" alt="Furnished" width={14} height={14} />
           {property.furnishedType}
         </span>
-        <span className="flex items-center gap-1 text-[#4C5564]">
+        <span className="flex items-center gap-1 font-bold text-[#000000]">
           <Image src="/images/floor.svg" alt="Floor" width={14} height={14} />
           {property.floor}
         </span>
 
-        <span className="flex items-center gap-1 text-[#4C5564]">
+        <span className="flex items-center gap-1 font-bold text-[#000000]">
           <Image src="/images/available.svg" alt="Open Time" width={14} height={14} />
           {property.availableTime}
         </span>
       </div>
-      <div className="flex w-full items-center justify-between bg-[#E6E7EB] px-2 py-2 text-xs font-semibold text-black lg:hidden">
+      <div className="flex w-full items-center justify-between bg-white px-2 py-2 text-xs font-semibold text-black lg:hidden">
         <div className="flex items-center gap-1">
           <p className="text-[15px] leading-none">More Details</p>
           <ChevronRight size={14} />

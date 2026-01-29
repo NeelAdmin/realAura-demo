@@ -1,27 +1,20 @@
-
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export function MobileFilters() {
-    return (
-        <div className="flex items-center gap-3">
-            <button className="h-6 w-6 rounded-sm bg-muted flex items-center justify-center">
-                <ChevronLeft size={16} />
-            </button>
+  return (
+    <div className="flex items-center gap-3">
+      <button className="bg-muted flex h-6 w-6 items-center justify-center rounded-sm">
+        <ChevronLeft size={16} />
+      </button>
 
-            <div className="flex gap-3 overflow-x-auto scrollbar-hide">
-                <button className="rounded-sm bg-muted px-2 py-2 text-xs">
-                    2 & 3 BHK
-                </button>
-                <button className="rounded-sm bg-muted px-2 py-2 text-xs">
-                    3 & 4 BHK
-                </button>
-                <button className="rounded-sm bg-muted px-2 py-2 text-xs">
-                    4 BHK +
-                </button>
-            </div>
-            <button className="h-6 w-6 rounded-sm bg-muted flex items-center justify-center">
-                <ChevronRight size={16} />
-            </button>
-        </div>
-    )
+      <div className="scrollbar-hide flex gap-3 overflow-x-auto">
+        <button className="bg-muted rounded-sm px-2 py-2 text-xs font-bold">2 & 3 BHK</button>
+        <button className="bg-muted rounded-sm px-2 py-2 text-xs font-bold">3 & 4 BHK</button>
+        <button className="bg-muted rounded-sm px-2 py-2 text-xs font-bold">4 BHK +</button>
+      </div>
+      <button className="bg-muted flex h-6 w-6 items-center justify-center rounded-sm">
+        <ChevronRight size={16} />
+      </button>
+    </div>
+  );
 }

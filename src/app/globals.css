@@ -46,3 +46,13 @@ input[type="number"] {
     @apply text-2xl leading-tight font-bold text-[#111111] md:text-3xl md:leading-snug;
   }
 }
+
+/* Hide scrollbar for Select Location Component */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}

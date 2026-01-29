@@ -18,7 +18,7 @@ export function CityCard({ city }: CityCardProps) {
         />
       </div>
 
-      <span className="font-sfui text-primary text-center text-[15px] leading-none font-semibold">
+      <span className="font-sfui text-primary text-center text-[15px] leading-none font-[650]">
         {city.name}
       </span>
     </div>

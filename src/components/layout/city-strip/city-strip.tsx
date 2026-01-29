@@ -3,11 +3,11 @@ import { cities } from "./city-list";
 
 export function CityStrip() {
   return (
-    <section className="w-full px-5 py-8 lg:px-0">
-      <h2 className="font-sfui mb-6 text-[16px] leading-none font-medium md:text-[30px] md:font-semibold">
+    <section className="w-full px-5 py-4 md:py-8 lg:px-0">
+      <h2 className="font-sfui mb-6 text-[16px] leading-none font-bold md:text-[30px] md:font-semibold">
         Select Location
       </h2>
-      <div className="scrollbar-hide flex gap-[32px] overflow-x-auto overflow-y-hidden lg:gap-[10px]">
+      <div className="hide-scrollbar flex gap-[12px] overflow-x-auto overflow-y-hidden lg:gap-[10px]">
         {cities.map((city) => (
           <div key={city.id}>
             <CityCard city={city} />
