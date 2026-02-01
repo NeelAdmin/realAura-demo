@@ -45,7 +45,7 @@ export default function ProjectPage({ params }: Props) {
 
 
   return (
-    <section className="w-full py-6">
+    <section className="w-full py-3">
       <div className="mx-auto max-w-7xl px-3 sm:px-4 lg:px-0">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
 
