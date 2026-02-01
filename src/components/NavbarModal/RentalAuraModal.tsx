@@ -87,7 +87,7 @@ export default function RentalAuraPopup({
               </div>
 
               <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">
-                Asset Owner
+                Owner
               </h3>
 
               <p className="text-sm sm:text-base md:text-lg text-gray-500 leading-relaxed">
@@ -122,7 +122,7 @@ export default function RentalAuraPopup({
               </div>
 
               <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">
-                Premium Tenant
+                Tenant
               </h3>
 
               <p className="text-sm sm:text-base md:text-lg text-gray-500 leading-relaxed">

@@ -1,9 +1,9 @@
 import { cn } from "@/lib/cn";
 
 const navItems = [
-  { label: "Rent", href: "#" },
+  { label: "Rent", href: "/rent" },
   { label: "Sell", href: "#", active: true },
-  { label: "Upcoming Projects", href: "#" },
+  { label: "Upcoming Projects", href: "/upcoming-projects" },
 ];
 
 export function NavLinks() {

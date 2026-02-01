@@ -7,18 +7,45 @@ type CityCardProps = {
 
 export function CityCard({ city }: CityCardProps) {
   return (
-    <div className="flex h-[90px] w-[80px] flex-col items-center gap-[5px] rounded-[5px] bg-[#F7F7F7] p-[8px] transition-transform duration-200 hover:scale-105 lg:h-[130px] lg:w-[158px] lg:gap-[9px] lg:rounded-[12px] lg:px-[10px] lg:py-[15px]">
-      <div className="flex h-[49px] w-[57px] items-center justify-center lg:h-[74px] lg:w-[80px]">
+    <div
+      className="
+        flex flex-col items-center justify-center
+        h-[70px] w-[70px]
+        lg:h-[120px] lg:w-[110px]
+        gap-2
+        rounded-[10px] bg-[#F7F7F7]
+        transition-transform duration-200 hover:scale-105
+      "
+    >
+      {/* Icon wrapper */}
+      <div
+        className="
+          flex items-center justify-center
+          h-[35px] w-[35px]
+          lg:h-[60px] lg:w-[60px]
+        "
+      >
         <Image
           src={city.image}
           alt={city.name}
-          width={80}
-          height={74}
-          className="h-full w-full object-contain"
+          width={60}
+          height={60}
+          className="
+            object-contain
+            h-[35px] w-[35px]
+            lg:h-[60px] lg:w-[60px]
+          "
         />
       </div>
 
-      <span className="font-sfui text-primary text-center text-[15px] leading-none font-[650]">
+      {/* City name */}
+      <span
+        className="
+          font-sfui text-primary text-center font-medium leading-none
+          text-[12px]
+          lg:text-[16px]
+        "
+      >
         {city.name}
       </span>
     </div>

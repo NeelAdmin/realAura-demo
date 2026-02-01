@@ -4,9 +4,11 @@ import { MoveUpRight } from "lucide-react";
 type Props = {
   title: string;
   properties: Property[];
+  className?: string;
+  upcoming?: boolean;
 };
 
-export function PropertySection({ title, properties }: Props) {
+export function PropertySection({ title, properties , className, upcoming = false }: Props) {
   return (
     <section className="w-full py-4 md:py-8">
       <div className="mb-4 hidden items-center justify-between lg:flex">
@@ -16,9 +18,14 @@ export function PropertySection({ title, properties }: Props) {
           <MoveUpRight size={14} />
         </a>
       </div>
-      <div className="flex flex-col gap-4 lg:grid lg:grid-cols-3 lg:gap-3">
+      <div
+        className="
+            flex flex-col gap-4
+            lg:grid lg:grid-cols-3 lg:gap-4
+          "
+      >
         {properties.map((property) => (
-          <PropertyCard key={property.id} property={property} />
+          <PropertyCard key={property.id} property={property} upcoming={upcoming} />
         ))}
       </div>
     </section>

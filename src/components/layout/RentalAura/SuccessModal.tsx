@@ -17,7 +17,7 @@ export function SuccessModal({ isOpen, transactionId }: SuccessModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-      <div className="bg-blue-50 p-4 md:p-12">
+      <div className="p-4 md:p-12">
         <div className="relative bg-white rounded-2xl shadow-2xl w-full md:w-[60vw] p-6 md:p-8 animate-in fade-in zoom-in duration-300">
           <div className="flex justify-center mb-4 md:mb-6">
             <div className="w-16 h-16 md:w-20 md:h-20 bg-green-100 rounded-full flex items-center justify-center">

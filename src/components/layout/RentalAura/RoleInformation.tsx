@@ -50,7 +50,7 @@ export default function RoleInformation({ role }: RoleInformationProps) {
   return (
     <>
       <div className="py-8 px-4 md:px-8">
-        <div className="min-h-screen bg-gray-100 py-1 px-1 md:py-3 md:px-3">
+        <div className="min-h-screen py-1 px-1 md:py-3 md:px-3">
           {step === 1 && (
             <IdentityForm
               onNext={handleIdentitySubmit}

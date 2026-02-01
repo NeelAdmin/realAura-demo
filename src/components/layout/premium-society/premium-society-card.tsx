@@ -1,41 +1,94 @@
-import Image from "next/image";
-import { PremiumSociety } from "./types";
-import { ChevronRight, Star } from "lucide-react";
+"use client"
+
+import Image from "next/image"
+import { PremiumSociety } from "./types"
+import { ChevronRight, Star } from "lucide-react"
 
 type Props = {
-  society: PremiumSociety;
-};
+  society: PremiumSociety
+  ratio?: string
+}
 
-export function PremiumSocietyCard({ society }: Props) {
+export function PremiumSocietyCard({ society, ratio = '430/350' }: Props) {
   return (
-    <div className="relative h-[200px] min-w-[260px] overflow-hidden rounded-md bg-black">
-      <Image
-        src={society.image}
-        alt={society.name}
-        width={430}
-        height={350}
-        className="object-cover"
-        priority
-      />
+    <>
+      <div
+        className="
+    relative overflow-hidden rounded-md shrink-0
+    /* MOBILE */
+    w-[138px] aspect-138/180
 
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-      <div className="absolute right-3 bottom-3 left-3 text-white">
-        <h3 className="text-[12px] font-semibold md:text-[24px]">{society.name}</h3>
+    /* LARGE MOBILE */
+    sm:w-[180px] sm:aspect-180/220
 
-        <div className="mt-1 flex items-center justify-between text-xs md:text-[15px]">
-          <button className="flex items-center gap-1 font-medium">
-            More Details
-            <ChevronRight size={14} />
-          </button>
+    /* DESKTOP */
+    lg:w-full lg:aspect-430/350
+  "
+      >
 
-          <div className="flex items-center gap-1">
-            <Star size={14} fill="gold" stroke="gold" />
-            <span>
-              {society.rating} ({society.reviews} reviews)
-            </span>
-          </div>
-        </div>
-      </div>
+        {/* Image */}
+        <Image
+          src={society.image}
+          alt={society.name}
+          fill
+          className="object-cover"
+          priority
+        />
+
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+
+        {/* Content overlay */}
+        {/* Content overlay */}
+<div className="absolute bottom-2 left-2 right-2 text-white">
+  <h3
+    className="
+      text-[11px] font-semibold leading-tight
+      sm:text-sm
+      md:text-lg
+    "
+  >
+    {society.name}
+  </h3>
+
+  <div
+    className="
+      mt-1
+      flex flex-col items-start gap-1
+
+      /* Desktop */
+      md:flex-row md:items-center md:justify-between
+    "
+  >
+    {/* More details */}
+    <button
+      className="
+        flex items-center gap-1
+        text-[9px] font-medium
+        sm:text-xs
+      "
+    >
+      More Details
+      <ChevronRight size={12} className="sm:size-[14px]" />
+    </button>
+
+    {/* Rating */}
+    <div
+      className="
+        flex items-center gap-1
+        text-[8px]
+        sm:text-xs
+      "
+    >
+      <Star size={11} fill="gold" stroke="gold" />
+      <span>
+        {society.rating} ({society.reviews} reviews)
+      </span>
     </div>
-  );
+  </div>
+</div>
+
+      </div>
+    </>
+  )
 }

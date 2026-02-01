@@ -7,8 +7,8 @@ export function Logo({ mobile }: { mobile?: boolean }) {
       <Image
         src={mobile ? "/images/mobile-logo.svg" : "/images/LOGO.png"}
         alt="RealAura Logo"
-        width={mobile ? 53 : 297}
-        height={mobile ? 46 : 62}
+        width={mobile ? 53 : 140}
+        height={mobile ? 46 : 32}
         className={className}
       />
     </div>

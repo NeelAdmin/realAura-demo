@@ -5,11 +5,31 @@ import { AppButton } from "@/components/ui/AppButton";
 
 type Props = {
   property: Property;
+  upcoming?: boolean;
+  height?:number;
 };
 
-export function PropertyCard({ property }: Props) {
+export function PropertyCard({ property, height}: Props) {
   return (
-    <div className="w-full overflow-hidden rounded-md">
+    <div className="relative group">
+      <div
+    className="
+      pointer-events-none
+      absolute -inset-2
+      hidden lg:block
+      rounded-[14px]
+      bg-gray-200/70
+      opacity-0
+      scale-[0.96]
+      transition-all
+      duration-300
+      ease-out
+      group-hover:opacity-100
+      group-hover:scale-100
+    "
+  />
+  <div className="relative z-10 overflow-hidden w-full rounded-md bg-white">
+    <div className="overflow-hidden w-full rounded-md">
       <div className="p-2 lg:hidden">
         <h3 className="text-sm font-bold whitespace-nowrap">{property.name}</h3>
 
@@ -18,7 +38,7 @@ export function PropertyCard({ property }: Props) {
             src="/images/home-page/location-yellow.png"
             alt="Location"
             width={12}
-            height={15}
+            height={height ? height : 15}
             className="shrink-0"
           />
           <p className="text-semibold leading-none">{property.location}</p>
@@ -54,33 +74,33 @@ export function PropertyCard({ property }: Props) {
           </div>
         )}
       </div>
-      <div className="flex w-full justify-between bg-[#4DC7EC] px-2 py-2 text-xs font-semibold text-white lg:hidden">
+      <div className="flex w-full justify-between bg-[#4DC7EC] px-2 py-2 text-xs font-medium text-white lg:hidden">
         <div className="flex items-center gap-1 text-[15px]">{property.price}/m</div>
 
         <div className="flex items-center gap-3">
           <Image src="/images/calender.svg" alt="Calendar" width={20} height={18.51} />
-          <p className="text-[15px] font-bold">25/12/2025</p>
+          <p className="text-[15px] font-medium">25/12/2025</p>
         </div>
       </div>
-      <div className="flex w-full justify-between bg-[#E6E7EB] px-2 py-2 text-xs font-semibold text-white lg:hidden">
-        <span className="flex items-center gap-1 font-bold text-[#000000]">
-          <Image src="/images/furnished.svg" alt="Furnished" width={14} height={14} />
+      <div className="flex w-full justify-between bg-[#E6E7EB] px-2 py-2 text-[10px] font-semibold text-white lg:hidden">
+        <span className="flex items-center gap-1 font-medium text-[#4C5564] lg:text-black">
+          <Image src="/images/furnished.svg" alt="Furnished" width={18} height={18} className="lg:w-[14px] h-[14px]"/>
           {property.furnishedType}
         </span>
-        <span className="flex items-center gap-1 font-bold text-[#000000]">
-          <Image src="/images/floor.svg" alt="Floor" width={14} height={14} />
+        <span className="flex items-center gap-1 font-medium text-[#4C5564] lg:text-black">
+          <Image src="/images/floor.svg" alt="Floor" width={18} height={18} className="lg:w-[14px] h-[14px]"/>
           {property.floor}
         </span>
 
-        <span className="flex items-center gap-1 font-bold text-[#000000]">
-          <Image src="/images/available.svg" alt="Open Time" width={14} height={14} />
+        <span className="flex items-center gap-1 font-medium text-[#4C5564] lg:text-black">
+          <Image src="/images/available.svg" alt="Open Time"width={18} height={18} className="lg:w-[14px] h-[14px]"/>
           {property.availableTime}
         </span>
       </div>
       <div className="flex w-full items-center justify-between bg-white px-2 py-2 text-xs font-semibold text-black lg:hidden">
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2">
           <p className="text-[15px] leading-none">More Details</p>
-          <ChevronRight size={14} />
+          <Image src="/images/ChevronRight.svg" alt="right" height={5} width={5} className="mt-0.5"/>
         </div>
 
         <div className="flex items-center gap-[20px]">
@@ -106,23 +126,23 @@ export function PropertyCard({ property }: Props) {
           </div>
         </div>
 
-        <div className="text-muted-foreground mt-3 flex h-[25px] items-center justify-between text-[13px]">
-          <span className="flex items-center gap-[4px]">
+        <div className="text-muted-foreground mt-3 flex flex-wrap gap-2 h-[25px] items-center justify-between text-[11px]">
+          <span className="flex items-center gap-1">
             <Image src="/images/area.svg" alt="Area" width={14} height={14} />
             {property.sqft}
           </span>
 
-          <span className="flex items-center gap-[4px]">
+          <span className="flex items-center gap-1">
             <Image src="/images/floor.svg" alt="Floor" width={14} height={14} />
             {property.floor}
           </span>
 
-          <span className="flex items-center gap-[4px] truncate whitespace-nowrap">
+          <span className="flex items-center gap-1 truncate whitespace-nowrap">
             <Image src="/images/furnished.svg" alt="Furnished" width={14} height={14} />
             {property.furnishedType}
           </span>
 
-          <span className="flex items-center gap-[4px] truncate whitespace-nowrap">
+          <span className="flex items-center gap-1 truncate whitespace-nowrap">
             <Image src="/images/available.svg" alt="Open Time" width={14} height={14} />
             {property.availableTime}
           </span>
@@ -155,6 +175,8 @@ export function PropertyCard({ property }: Props) {
           </div>
         )}
       </div>
+    </div>
+    </div>
     </div>
   );
 }

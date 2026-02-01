@@ -12,6 +12,4 @@ export const cities: City[] = [
   { id: 5, name: "Amritsar", image: "/images/amritsar.svg" },
   { id: 6, name: "Amritsar", image: "/images/amritsar.svg" },
   { id: 7, name: "Amritsar", image: "/images/amritsar.svg" },
-  { id: 8, name: "Amritsar", image: "/images/amritsar.svg" },
-
 ]
