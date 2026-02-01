@@ -3,7 +3,7 @@ import { UpcomingProperty } from "./types"
 export const upcomingProperties: UpcomingProperty[] = [
   {
     id: 1,
-    image: "/images/interior.png",
+    image: "/images/interior.svg",
     name: "Sobha Sentosa - 3 BHK Apartment",
     location: "Panthur",
     totalUnits: 388,
@@ -15,7 +15,7 @@ export const upcomingProperties: UpcomingProperty[] = [
   },
   {
     id: 2,
-    image: "/images/interior.png",
+    image: "/images/interior.svg",
     name: "Sobha Sentosa - 3 BHK Apartment",
     location: "Panthur",
     totalUnits: 388,
@@ -27,7 +27,7 @@ export const upcomingProperties: UpcomingProperty[] = [
   },
    {
     id: 3,
-    image: "/images/interior.png",
+    image: "/images/interior.svg",
     name: "Sobha Sentosa - 3 BHK Apartment",
     location: "Panthur",
     totalUnits: 388,
@@ -52,10 +52,10 @@ export const propertyDetailMock: PropertyDetail = {
   tags: ["Upcoming Project", "RERA Approved"],
 
   media: [
-    { id: "1", image: "/images/interior.png" },
-    { id: "2", image: "/images/interior.png" },
-    { id: "3", image: "/images/interior.png" },
-    { id: "4", image: "/images/interior.png" },
+    { id: "1", image: "/images/interior.svg" },
+    { id: "2", image: "/images/interior.svg" },
+    { id: "3", image: "/images/interior.svg" },
+    { id: "4", image: "/images/interior.svg" },
   ],
 
   stats :[
