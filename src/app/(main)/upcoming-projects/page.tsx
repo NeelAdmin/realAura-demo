@@ -50,7 +50,7 @@ export default function UpcomingPropertiesPage() {
   className="
     w-full
     flex gap-4
-    px-4 md:px-0
+    px-4
     overflow-x-auto scrollbar-hide
     flex-nowrap
 
