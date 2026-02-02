@@ -6,7 +6,7 @@ import { premiumSocieties } from "@/components/layout/premium-society/premium-so
 
 export default function UpcomingPropertiesPage() {
   return (
-    <section className="w-full py-6">
+    <section className="w-full">
       <div className="mx-auto max-w-7xl">
         <div
           className="

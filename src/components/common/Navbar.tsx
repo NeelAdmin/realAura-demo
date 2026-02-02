@@ -30,7 +30,11 @@ export function Navbar() {
 
   const allowedRoutes = ["/"];
 
+  console.log(pathname);
+
   const showComponent = allowedRoutes.includes(pathname);
+  console.log(showComponent);
+
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -43,6 +47,17 @@ export function Navbar() {
       return () => window.removeEventListener("resize", checkIfMobile);
     }
   }, []);
+
+  const isHome = pathname === "/";
+  const isDesktop = !mobile;
+
+  const showBottomSection = true;
+
+  const showSearchBelow =
+    isHome || (!isHome && mobile);
+
+  const showDesktopFilters = isDesktop;
+  const showMobileFilters = mobile;
 
   return (
     <>
@@ -125,27 +140,36 @@ export function Navbar() {
           />
         )}
       </div>
-      <section className="flex w-full justify-center py-6">
-        <div className="flex w-full max-w-7xl flex-col items-center gap-4 px-4">
-          {showComponent && (
-            <div className="flex w-full justify-center">
-              <SearchInput />
-            </div>
-          )}
-          {((showComponent && !mobile) ||
-            (showComponent && mobile) ||
-            (!showComponent && !mobile)) && (
-            <div>
+
+      {showBottomSection && (
+        <section className="flex w-full justify-center py-6">
+          <div className="flex w-full max-w-7xl flex-col items-center gap-4 px-4">
+
+            {/* 🔍 Search below navbar */}
+            {showSearchBelow && (
+              <div className="flex w-full justify-center">
+                <SearchInput />
+              </div>
+            )}
+
+            {/* 🧩 Filters */}
+            {showDesktopFilters && (
               <div className="hidden lg:block">
                 <FilterChips />
               </div>
-              <div className="lg:hidden">
+            )}
+
+            {showMobileFilters && (
+              <div className="lg:hidden w-full">
                 <MobileFilters />
               </div>
-            </div>
-          )}
-        </div>
-      </section>
+            )}
+
+          </div>
+        </section>
+      )}
+
+
     </>
   );
 }
