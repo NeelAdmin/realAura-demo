@@ -4,9 +4,9 @@ import { MoveUpRight } from "lucide-react";
 
 export function PremiumSocietySection() {
   return (
-    <section className="w-full px-5 py-6 lg:px-0">
+    <section className="w-full px-3.5 py-3 lg:px-0">
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-[20px] font-bold md:text-[30px]">Premium Society in Bengaluru</h2>
+        <h2 className="text-[16px] font-bold md:text-[30px]">Premium Society in Bengaluru</h2>
         <button className="hidden items-center gap-1 text-xs font-medium lg:flex">
           See All Society
           <MoveUpRight size={14} />

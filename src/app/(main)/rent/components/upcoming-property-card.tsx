@@ -20,26 +20,30 @@ export function UpcomingPropertyCard({ property }: Props) {
         w-full
         bg-[#F8F8F9] shadow-[0px_4px_4px_0px_#DDDDDD40]
         rounded-[10px]
-        pt-[15px] pr-[20px] pb-[15px] pl-[20px]
+        p-3 lg:p-5
       "
       onClick={() => {
         router.push(`/rent/${property.id}`)
       }}
     >
       {/* TOP */}
-      <div className="flex flex-col gap-[30px] lg:flex-row">
+      <div className="flex flex-col gap-[15px] lg:flex-row">
 
         {/* IMAGE */}
         <div
           className="
-            relative
-             w-full
-            lg:w-[58%]
-            xl:w-[60%]
-            aspect-[695/530]
-            rounded-[15px]
-            overflow-hidden
-          "
+    relative
+    w-full
+    lg:w-[58%]
+    xl:w-[60%]
+
+    aspect-[326/374]      /* 📱 Mobile */
+    md:aspect-[4/5]      /* 📱+ Tablet (optional fine-tune) */
+    lg:aspect-[695/530]  /* 💻 Desktop */
+
+    rounded-[15px]
+    overflow-hidden
+  "
         >
           <Image
             src={property.image}
@@ -48,13 +52,10 @@ export function UpcomingPropertyCard({ property }: Props) {
             className="object-cover"
             priority
           />
-
-          {/* TAGS */}
-
         </div>
 
         {/* DETAILS */}
-        <div className="flex-1 flex flex-col gap-6">
+        <div className="flex-1 flex flex-col gap-4 py-1">
           <div className="flex flex-col gap-2">
             <h3 className="text-[16px] lg:text-[18px] font-semibold">
               {property.name}
@@ -88,17 +89,17 @@ export function UpcomingPropertyCard({ property }: Props) {
       {/* BOTTOM BAR */}
       <div
         className="
-    mt-6 bg-white
+    mt-4 bg-[#F8F8F9] lg:bg-white
 
     flex flex-col gap-3
     lg:flex-row lg:items-center lg:justify-between
 
-    px-2 py-3
+    py-3
     lg:px-4 lg:py-4
   "
       >
         {/* LEFT TAGS */}
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-1">
           <AppButton
             label="Area : 1080 sqft"
             variant="pill-yellow"
@@ -122,7 +123,7 @@ export function UpcomingPropertyCard({ property }: Props) {
 
 
         {/* RIGHT ACTIONS */}
-        <div className="flex items-center justify-between gap-3 lg:gap-4">
+        <div className="flex flex-row-reverse lg:flex-row items-center justify-between gap-3 lg:gap-4">
           {/* Icons */}
           <div className="flex items-center gap-4">
             <Image

@@ -10,23 +10,31 @@ export function DistanceCalculator({ wnatBg }: Props) {
     <>
       {/* Heading */}
       
-        <h5 className={`text-[16px] font-semibold md:text-[20px] ${wnatBg ? "" : "px-6 md:px-0"} mb-2`}>
+        <h5 className={`hidden lg:block text-[16px] font-semibold md:text-[20px] ${wnatBg ? "" : "px-6 md:px-4"} mb-2`}>
           Enter your office, school, work to calculate distance form the society
         </h5>
 
       {/* MOBILE */}
-      <div className={`w-full ${wnatBg ? "" : "px-6"} space-y-4 md:p-0 md:hidden`}>
-      
+      <div className={`w-full ${wnatBg ? "p-4" : "px-6"} space-y-6 md:p-0 md:hidden bg-white shadow-md rounded-2xl`}>
+       <h5 className={`text-[14px] font-semibold md:text-[20px] ${wnatBg ? "" : " md:px-4"} mb-2`}>
+          Enter your office, school, work to calculate distance form the society
+        </h5>
 
+<div className="space-y-2 flex flex-col justify-center items-center mt-4">
+  <h4 className="font-medium">Enter your location</h4>
+       <div className="shadow-[3px_3px_3px_0px_#DDDDDD] w-full rounded-sm">
         <input
           placeholder="E.g. Proper Society"
-          className="w-full rounded-md border px-4 py-2 text-sm"
+          className="w-full rounded-md px-6 py-2 text-sm ;
+"
         />
+        </div>
+        </div>
 
         {/* Society Card */}
-        <div className="flex items-center gap-4 rounded-md bg-[#FFF3CC] p-4">
+        <div className="flex items-center gap-4 rounded-md bg-[#FFF3CC] p-2">
           <div className="flex h-[44px] w-[44px] items-center justify-center rounded-md bg-[#FFD140]">
-            <Image src="/images/location.svg" alt="location" width={18} height={18} />
+            <Image src="/images/locationW.svg" alt="location" width={18} height={18} />
           </div>
 
           <div>
@@ -37,7 +45,7 @@ export function DistanceCalculator({ wnatBg }: Props) {
 
         <AppButton
           label="Calculate Distance"
-          className="h-10 w-full text-sm rounded-md"
+          className="h-10 w-full text-sm rounded-md px-0"
         />
       </div>
 

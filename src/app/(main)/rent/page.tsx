@@ -7,10 +7,10 @@ import { premiumSocieties } from "@/components/layout/premium-society/premium-so
 export default function UpcomingPropertiesPage() {
   return (
     <section className="w-full">
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto max-w-7xl p-1">
         <div
           className="
-        flex flex-col gap-8
+        flex flex-col gap-4 lg:gap-6
         lg:flex-row lg:items-start
       "
         >
@@ -21,7 +21,7 @@ export default function UpcomingPropertiesPage() {
           lg:w-[68%]
           xl:w-[70%]
 
-          space-y-8
+          space-y-6
         "
           >
             {upcomingProperties.map((property) => (
@@ -42,14 +42,14 @@ export default function UpcomingPropertiesPage() {
           space-y-6
         "
           >
-            <div className="p-4 md:p-0">
+            <div className="px-4 lg:p-4 md:p-0">
               <DistanceCalculator wnatBg={true} />
             </div>
             <div
               className="
     w-full
     flex gap-4
-    px-4 md:px-6
+    px-4 pb-6 md:px-6
     overflow-x-auto scrollbar-hide
     flex-nowrap
 

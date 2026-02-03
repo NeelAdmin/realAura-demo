@@ -50,16 +50,16 @@ export function AppButton({
         // ===== PILL SIZE (RESPONSIVE) =====
         isPill && [
           // Mobile (smallest)
-          "h-6 px-2.5 text-[10px]",
+          "h-6 px-2 text-[9px]",
 
           // Small devices
-          "sm:h-7 sm:px-2 sm:text-xs",
+          "sm:h-7 sm:px-2 sm:text-[10px]",
 
           // Tablets
-          "md:h-8 md:px-3 md:text-sm",
+          "md:h-8 md:px-3 md:text-[12px]",
 
           // Desktop
-          "lg:h-8 lg:px-4 lg:text-sm",
+          "lg:h-8 lg:px-4 lg:text-[12px]",
 
           "font-medium rounded-[8px]",
         ],

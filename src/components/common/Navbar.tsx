@@ -143,30 +143,32 @@ export function Navbar() {
 
       {showBottomSection && (
         <section className="flex w-full justify-center py-6">
-          <div className="flex w-full max-w-7xl flex-col items-center gap-4 px-4">
+          <div className="flex w-full max-w-7xl flex-col gap-4 px-4 mx-auto">
 
-            {/* 🔍 Search below navbar */}
+            {/* 🔍 Search */}
             {showSearchBelow && (
               <div className="flex w-full justify-center">
                 <SearchInput />
               </div>
             )}
 
-            {/* 🧩 Filters */}
+            {/* 🧩 Desktop Filters */}
             {showDesktopFilters && (
-              <div className="hidden lg:block">
+              <div className="hidden lg:flex w-full justify-center">
                 <FilterChips />
               </div>
             )}
 
+            {/* 📱 Mobile Filters */}
             {showMobileFilters && (
-              <div className="lg:hidden w-full">
+              <div className="flex w-full justify-center lg:hidden">
                 <MobileFilters />
               </div>
             )}
 
           </div>
         </section>
+
       )}
 
 

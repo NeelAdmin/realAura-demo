@@ -14,14 +14,18 @@ export function PropertyMediaGallery({ media, tags }: Props) {
       {/* Main Image */}
       <div
         className="
-          relative w-full
-          aspect-[16/9]
-          sm:aspect-[16/8]
-          lg:aspect-[16/7]
-          max-w-full lg:max-w-[900px]
-          overflow-hidden rounded-xl
-        "
+    relative w-full
+
+    aspect-[4/5]        
+    sm:aspect-[3/2]     
+    md:aspect-video    
+    lg:aspect-[16/7]    
+
+    max-w-full lg:max-w-[900px]
+    overflow-hidden rounded-xl
+  "
       >
+
         <Image
           src={media[0].image}
           alt="Property"
@@ -35,7 +39,7 @@ export function PropertyMediaGallery({ media, tags }: Props) {
       {/* Thumbnails */}
       <div
         className="
-          flex gap-2 sm:gap-6
+          flex gap-2 px-6 lg:px-0 sm:gap-6
           overflow-x-auto scrollbar-hide
           w-full
           justify-center
@@ -46,8 +50,8 @@ export function PropertyMediaGallery({ media, tags }: Props) {
             key={item.id}
             className="
               relative flex-shrink-0
-              h-[60px] w-[55px]
-              sm:h-[90px] sm:w-[120px]
+              h-[50px] w-[50px]
+              sm:h-[70px] sm:w-[100px]
               lg:h-[130px] lg:w-[150px]
               overflow-hidden rounded-lg
             "

@@ -8,7 +8,7 @@ export function PropertyDetailCard() {
   const property = propertyDetailMock
 
   return (
-    <div className="w-full rounded-xl bg-[#F8F8F9] p-4 shadow-[0px_4px_4px_0px_#DDDDDD40] space-y-6">
+    <div className="w-full rounded-xl lg:bg-[#F8F8F9] y-4 shadow-[0px_4px_4px_0px_#DDDDDD40] space-y-6">
       <PropertyMediaGallery
         media={property.media}
         tags={property.tags}

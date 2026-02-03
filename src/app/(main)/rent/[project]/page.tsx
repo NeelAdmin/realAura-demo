@@ -28,7 +28,7 @@ export default function ProjectPage({ params }: Props) {
     {
       id: "map",
       label: "Map",
-      component: <div className="space-y-6">  <DistanceCalculator wnatBg={false} />
+      component: <div className="space-y-6">  <DistanceCalculator wnatBg={true} />
         <LeafletMap center={[12.9716, 77.5946]} /></div>
     },
     {
@@ -67,7 +67,7 @@ export default function ProjectPage({ params }: Props) {
           </div>
 
           {/* RIGHT — 30% */}
-          <div className="w-full lg:w-[28%] xl:w-[30%] space-y-6">
+          <div className="w-full lg:w-[28%] xl:w-[30%] space-y-4">
             <h3 className="text-[16px] font-semibold">Recommended Properties</h3>
 
             <div

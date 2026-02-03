@@ -3,9 +3,9 @@ import { blogs } from "@/components/layout/blog/blog-list";
 
 const BlogPage = () => {
   return (
-    <div className="m-4 md:m-[30px]">
+    <div className="mx-4 md:mx-[30px]">
       <div className="flex flex-col gap-8 p-2 md:gap-10 md:p-6">
-        <h1 className="text-[32px] leading-[100%] font-semibold tracking-normal md:text-[40px]">
+        <h1 className="text-[24px] lg:text-[32px] leading-[100%] font-semibold tracking-normal">
           Blogs
         </h1>
 

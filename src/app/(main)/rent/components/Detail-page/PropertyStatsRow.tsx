@@ -58,10 +58,10 @@ export function PropertyStatsRow({ stats }: { stats: StatsItem[] }) {
 function MobileStat({ label, value, icon }: StatsItem) {
   return (
     <div className="flex items-center gap-3 px-4 py-3">
-      <Image src={icon} alt={label} width={20} height={20} />
+      <Image src={icon} alt={label} width={16} height={16} />
 
       <div className="leading-tight">
-        <p className="text-sm font-medium text-gray-900">
+        <p className="text-xs font-medium text-gray-900">
           {value}
         </p>
       </div>

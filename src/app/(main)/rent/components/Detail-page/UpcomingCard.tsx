@@ -34,7 +34,8 @@ export function UpcomingCard({ property, height }: Props) {
           group-hover:scale-100
         "
       />
-      <div className="relative z-10 overflow-hidden w-full rounded-md bg-white">
+      <div className="relative z-10 w-full rounded-md bg-white overflow-visible lg:overflow-hidden">
+
         <div className="overflow-hidden w-full rounded-md">
           <div className="relative w-full">
             <div className="relative w-full aspect-[1/1] md:aspect-[4/3]">
@@ -71,35 +72,35 @@ export function UpcomingCard({ property, height }: Props) {
             <div className="flex items-center justify-between gap-3">
               <h3 className="text-[11px] lg:text-[15px] font-medium whitespace-nowrap">{property.name}</h3>
 
-              <div className="text-secondary flex items-center gap-1 text-xs">
+              <div className="text-secondary flex items-center gap-1 text-[10px]">
                 <Image
                   src="/images/location.svg"
                   alt="Location"
                   width={12}
-                  height={15}
+                  height={13}
                   className="shrink-0"
                 />
                 <p className="leading-none">{property.location}</p>
               </div>
             </div>
 
-            <div className="text-muted-foreground mt-3 flex flex-wrap h-[25px] items-center justify-between text-[13px]">
-              <span className="flex items-center gap-[4px]">
-                <Image src="/images/area.svg" alt="Area" width={14} height={14} className="lg:w-[18px] lg:h-[18px]"/>
+            <div className="text-muted-foreground mt-2 flex flex-wrap items-center justify-between">
+              <span className="flex items-center gap-[2px] text-[10px]">
+                <Image src="/images/area.svg" alt="Area" width={14} height={14} className="lg:w-[18px] lg:h-[18px]" />
                 {property.sqft}
               </span>
 
-              <span className="flex items-center gap-[4px]">
+              <span className="flex items-center gap-[2px] text-[10px]">
                 <Image src="/images/floor.svg" alt="Floor" width={14} height={14} className="lg:w-[18px] lg:h-[18px]" />
                 {property.floor}
               </span>
 
-              <span className="flex items-center gap-[4px] truncate whitespace-nowrap">
+              <span className="flex items-center gap-[2px] truncate text-[10px] whitespace-nowrap">
                 <Image src="/images/furnished.svg" alt="Furnished" width={14} height={14} className="lg:w-[18px] lg:h-[18px]" />
                 {property.furnishedType}
               </span>
 
-              <span className="flex items-center gap-[4px] truncate whitespace-nowrap">
+              <span className="flex items-center gap-[2px] truncate text-[10px] whitespace-nowrap">
                 <Image src="/images/available.svg" alt="Open Time" width={14} height={14} className="lg:w-[18px] lg:h-[18px]" />
                 {property.availableTime}
               </span>

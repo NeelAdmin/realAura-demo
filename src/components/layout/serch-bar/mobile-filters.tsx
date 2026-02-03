@@ -1,4 +1,5 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Image from "next/image";
 
 export function MobileFilters() {
   return (
@@ -8,7 +9,10 @@ export function MobileFilters() {
       </button>
 
       <div className="scrollbar-hide flex gap-2 overflow-x-auto">
-        <button className="bg-muted rounded-sm px-2 py-2 text-[10px] font-medium">2 & 3 BHK</button>
+        <button className="bg-muted rounded-sm px-2 py-2 text-[11px] font-medium flex gap-1">
+          <Image src="/images/Filter Icon.svg" alt="Filter" width={10} height={8} />
+          Filters
+        </button>
         <button className="bg-muted rounded-sm px-2 py-2 text-[10px] font-medium">3 & 4 BHK</button>
         <button className="bg-muted rounded-sm px-2 py-2 text-[10px] font-medium">4 BHK +</button>
       </div>
