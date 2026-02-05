@@ -37,7 +37,7 @@ export default function LeafletMap({ center, zoom = 13 }: Props) {
   }
 
   return (
-    <div className="w-full h-[60vh] md:h-[50vh] lg:h-[400px] rounded-* overflow-hidden px-3 pl-3 md:px-0 md:pl-0">
+    <div className="w-full h-[60vh] md:h-[50vh] lg:h-[400px] rounded-* overflow-hidden px-3 pl-3 md:px-0 md:pl-0 z-0">
       <MapContainer
         center={center}
         zoom={zoom}

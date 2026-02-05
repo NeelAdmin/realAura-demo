@@ -1,14 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "@/lib/validations/auth.schema";
 import * as yup from "yup";
 import Image from "next/image";
+import { OTPVerification } from "../auth/OTPVerification";
 
 type LoginFormData = yup.InferType<typeof loginSchema>;
 
-function LoginForm({ onSwitchToForgot }: { onSwitchToForgot: () => void }) {
+function LoginForm({ onSwitchToForgot, onSwitchToRegister }: { onSwitchToForgot: () => void, onSwitchToRegister: () => void }) {
   const {
     register,
     handleSubmit,
@@ -18,9 +20,47 @@ function LoginForm({ onSwitchToForgot }: { onSwitchToForgot: () => void }) {
     mode: "onChange",
   });
 
-  const onSubmit = (data: LoginFormData) => {
+
+
+  const [showOTP, setShowOTP] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState("");
+
+  const onSubmit = async (data: LoginFormData) => {
     console.log("Login data:", data);
+
+    // 1. Save phone number
+    setPhoneNumber(`+91 ${data.phone}`);
+
+    // 2. Call your OTP API here
+    // await sendOtp(data.phone);
+
+    // 3. Show OTP screen
+    setShowOTP(true);
   };
+  if (showOTP) {
+    return (
+      <OTPVerification
+        phoneNumber={phoneNumber}
+        onVerify={async (otp) => {
+          console.log("Verifying OTP:", otp);
+
+          // TODO: verify OTP API
+          // await verifyOtp({ phoneNumber, otp });
+
+          // success → close modal / redirect
+        }}
+        onResend={async () => {
+          console.log("Resending OTP to", phoneNumber);
+
+          // TODO: resend OTP API
+          // await resendOtp(phoneNumber);
+        }}
+        onGoBack={() => {
+          setShowOTP(false);
+        }}
+      />
+    );
+  }
 
   return (
     <div className="flex flex-col gap-[37px]">
@@ -124,7 +164,7 @@ function LoginForm({ onSwitchToForgot }: { onSwitchToForgot: () => void }) {
       <div className="flex flex-col md:flex-row md:items-center justify-between text-sm md:h-[19px] gap-3 md:gap-0 text-[16px] md:text-[16px]">
         <div>
           <span className="text-[#000000] font-normal">New to Realaura ? </span>
-          <button className="text-secondary-end font-medium hover:underline text-[16px] md:text-[16px]">
+          <button className="text-secondary-end font-medium hover:underline text-[16px] md:text-[16px]" onClick={onSwitchToRegister}>
             Create Account
           </button>
         </div>

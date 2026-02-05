@@ -14,13 +14,14 @@ import { MobileFilters } from "../layout/serch-bar/mobile-filters";
 import { FilterChips } from "../layout/serch-bar/filter-chips";
 import { SearchInput } from "../layout/serch-bar/search-input";
 import { usePathname } from "next/navigation";
+import { RegisterForm } from '@/components/auth/RegisterForm';
 
 export function Navbar() {
   const [mobile, setMobile] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isPostPopupOpen, setIsPostPopupOpen] = useState(false);
   const [isProfileRatingModalOpen, setIsProfileRatingModalOpen] = useState(false);
-  const [view, setView] = useState<"login" | "forgot">("login");
+  const [view, setView] = useState<'login' | 'forgot' | 'register'>('login');
   const pathname = usePathname();
 
   const handleClose = () => {
@@ -111,7 +112,7 @@ export function Navbar() {
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={handleClose} />
 
-            <div className="animate-in fade-in zoom-in relative w-full max-w-[326px] rounded-[10px] bg-white p-5 shadow-2xl duration-200 md:max-w-[539px] md:px-[45px] md:py-[70px]">
+            <div className="animate-in fade-in zoom-in relative w-full max-w-[326px] rounded-[10px] bg-white p-5 shadow-2xl duration-200 md:max-w-[539px] md:px-[45px] md:py-[50px]">
               <button
                 onClick={handleClose}
                 className="absolute top-4 right-4 text-gray-400 transition-colors hover:text-gray-600 md:top-6 md:right-6"
@@ -119,10 +120,14 @@ export function Navbar() {
               >
                 <X className="h-6 w-6" />
               </button>
-
               <div className="mx-auto max-w-[449px]">
                 {view === "login" ? (
-                  <LoginForm onSwitchToForgot={() => setView("forgot")} />
+                  <LoginForm
+                    onSwitchToForgot={() => setView("forgot")}
+                    onSwitchToRegister={() => setView("register")}
+                  />
+                ) : view === "register" ? (
+                  <RegisterForm onSwitchToLogin={() => setView("login")} />
                 ) : (
                   <ForgotPasswordForm onSwitchToLogin={() => setView("login")} />
                 )}

@@ -1,9 +1,11 @@
 "use client";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export function Footer() {
   const [mobile, setMobile] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -127,7 +129,7 @@ export function Footer() {
             </ul>
           </div>
           <div className="order-1 md:order-1">
-            <h3 className="text-yellow-500 font-semibold mb-4">Contact</h3>
+            <h3 className="text-yellow-500 font-semibold mb-4" onClick={() => router.push("/contact")}>Contact</h3>
             <div className="mb-6 sm:hidden">
               <p className="text-gray-300 text-sm leading-relaxed">
                 AG-4, F Zone, Rose Mansion,

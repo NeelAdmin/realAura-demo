@@ -4,34 +4,76 @@ import { SectionIdentityLabel } from "../layout/RentalAura/Common/TitleField";
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
+  variant?: "boxed" | "underline";
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, className = "", ...props }, ref) => {
+  (
+    {
+      label,
+      error,
+      variant = "boxed",
+      className = "",
+      ...props
+    },
+    ref
+  ) => {
+    const baseInput = `
+      w-full text-sm text-gray-900
+      placeholder:text-gray-400
+      focus:outline-none
+      disabled:cursor-not-allowed
+    `;
+
+    const variants = {
+      boxed: `
+        px-3 py-3
+        bg-white
+        border border-gray-200
+        rounded-lg
+        focus:ring-2 focus:ring-yellow-500
+        focus:border-transparent
+      `,
+      underline: `
+        px-0 py-2
+        bg-transparent
+        border-0
+        border-b border-gray-300
+        rounded-none
+        focus:border-black
+      `,
+    };
+
     return (
-      <div className="w-full">
+      <div className={`w-full ${className}`}>
+        {/* ✅ LABEL (render once, variant-aware) */}
         {label && (
           <SectionIdentityLabel
             label={label}
-            className="block text-sm font-medium text-gray-700 mb-2 uppercase tracking-wide"
+            className={
+              variant === "underline"
+                ? "mb-1 block text-xs font-medium text-gray-500"
+                : "mb-2 block text-sm font-medium uppercase tracking-wide text-gray-700"
+            }
           />
         )}
+
         <input
           ref={ref}
           className={`
-            w-full px-4 py-4 bg-gray-50 border border-gray-200 rounded-lg text-md text-gray-900
-            focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent focus:bg-white
-            disabled:bg-gray-100 disabled:cursor-not-allowed
-            placeholder:text-gray-400 placeholder:text-lg
+            ${baseInput}
+            ${variants[variant]}
             ${error ? "border-red-500 focus:ring-red-500" : ""}
-            ${className}
           `}
           {...props}
         />
-        {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
+
+        {error && (
+          <p className="mt-1 text-xs text-red-600">{error}</p>
+        )}
       </div>
     );
-  },
+  }
 );
 
 Input.displayName = "Input";
