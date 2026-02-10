@@ -1,15 +1,16 @@
-'use client';
+"use client";
 
-import { useForm } from 'react-hook-form';
-import { AppButton } from '@/components/ui/AppButton';
-import { useEffect, useState } from 'react';
-import { useVerifyOtpMutation } from '@/services/authApi';
-import { useAuth } from '@/contexts/AuthContext';
+import { useForm } from "react-hook-form";
+import { AppButton } from "@/components/ui/AppButton";
+import { useEffect, useState } from "react";
+import { useVerifyOtpMutation } from "@/services/authApi";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "@/feature/auth/authSlice";
 
 interface OTPVerificationProps {
   phoneNumber: string;
-  role: 'OWNER' | 'TENANT' | 'AFFILIATE';
-  type: 'LOGIN' | 'REGISTER';
+  role: "OWNER" | "TENANT" | "AFFILIATE" | any;
+  type: "LOGIN" | "REGISTER";
   onGoBack: () => void;
   onSuccess?: () => void;
   countdownSeconds?: number;
@@ -27,7 +28,6 @@ export function OTPVerification({
   onSuccess,
   countdownSeconds = 30,
 }: OTPVerificationProps) {
-  const { login } = useAuth();
   const {
     register,
     handleSubmit,
@@ -37,14 +37,15 @@ export function OTPVerification({
     watch,
   } = useForm<OTPForm>({
     defaultValues: {
-      otp: ['', '', '', '', '', ''],
+      otp: ["", "", "", "", "", ""],
     },
   });
 
   const [verifyOtp, { isLoading }] = useVerifyOtpMutation();
   const [countdown, setCountdown] = useState(countdownSeconds);
+  const dispatch = useDispatch();
 
-  const otp = watch('otp');
+  const otp = watch("otp");
 
   const handleOtpChange = (value: string, index: number) => {
     if (!/^\d*$/.test(value)) return;
@@ -57,14 +58,14 @@ export function OTPVerification({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
-    if (e.key === 'Backspace' && !otp[index] && index > 0) {
+    if (e.key === "Backspace" && !otp[index] && index > 0) {
       setFocus(`otp.${index - 1}`);
     }
   };
 
   const onSubmit = async (data: OTPForm) => {
     try {
-      const code = data.otp.join('');
+      const code = data.otp.join("");
 
       if (code.length !== 6) return;
 
@@ -75,18 +76,25 @@ export function OTPVerification({
         role,
       }).unwrap();
 
-      if (response.status === 'SUCCESS' && response.data) {
-        // Store tokens and update auth state
-        login({
-          accessToken: response.data.access_token as string,
-          refreshToken: response.data.refresh_token as string,
-        });
-        
-        // Call the success callback if provided
+      if (response.status === "SUCCESS" && response.data) {
+        const { access_token, refresh_token, user } = response.data;
+
+        // 1️⃣ Store refresh token (persistence)
+        localStorage.setItem("refreshToken", refresh_token as string);
+
+        // 2️⃣ Store access token + user in Redux
+        dispatch(
+          setCredentials({
+            accessToken: access_token as string,
+            user,
+          })
+        );
+
+        // 3️⃣ Move user forward
         onSuccess?.();
       }
     } catch (error) {
-      console.error('❌ OTP verification failed', error);
+      console.error("❌ OTP verification failed", error);
     }
   };
 
@@ -97,7 +105,7 @@ export function OTPVerification({
 
   // Auto-focus first OTP box
   useEffect(() => {
-    setFocus('otp.0');
+    setFocus("otp.0");
   }, [setFocus]);
 
   // Countdown timer
@@ -112,18 +120,18 @@ export function OTPVerification({
   }, [countdown]);
 
   return (
-    <div className="w-full max-w-md mx-auto">
-      <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Verify OTP</h2>
+    <div className="mx-auto w-full max-w-md">
+      <div className="mb-6 text-center">
+        <h2 className="mb-2 text-2xl font-bold text-gray-900">Verify OTP</h2>
         <p className="text-sm text-gray-600">
-          We've sent a verification code to
+          We&apos;ve sent a verification code to
           <span className="font-medium"> {phoneNumber}</span>
         </p>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* OTP Inputs */}
-        <div className="flex gap-2">
+        <div className="flex justify-center gap-2">
           {[0, 1, 2, 3, 4, 5].map((index) => (
             <input
               key={index}
@@ -131,7 +139,7 @@ export function OTPVerification({
               inputMode="numeric"
               pattern="[0-9]*"
               maxLength={1}
-              className="w-12 h-12 text-center text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+              className="focus:ring-primary h-12 w-12 rounded-lg border border-gray-300 text-center text-lg focus:border-transparent focus:ring-2"
               {...register(`otp.${index}`, {
                 required: true,
                 onChange: (e) => handleOtpChange(e.target.value, index),
@@ -145,14 +153,12 @@ export function OTPVerification({
         {/* Resend OTP */}
         <div className="text-center">
           {countdown > 0 ? (
-            <p className="text-sm text-gray-500">
-              Resend OTP in {countdown}s
-            </p>
+            <p className="text-sm text-gray-500">Resend OTP in {countdown}s</p>
           ) : (
             <button
               type="button"
               onClick={handleResend}
-              className="text-sm font-medium text-primary hover:underline"
+              className="text-primary text-sm font-medium hover:underline"
             >
               Resend OTP
             </button>
@@ -163,15 +169,15 @@ export function OTPVerification({
         <div className="space-y-3">
           <AppButton
             type="submit"
-            label={isLoading ? 'Verifying...' : 'Verify OTP'}
-            className="w-full h-12 bg-gradient-to-r from-secondary-start to-secondary-end text-white rounded-lg font-medium"
+            label={isLoading ? "Verifying..." : "Verify OTP"}
+            className="from-secondary-start to-secondary-end h-12 w-full rounded-lg bg-gradient-to-r font-medium text-white"
             disabled={isLoading}
           />
 
           <button
             type="button"
             onClick={onGoBack}
-            className="w-full h-12 border border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+            className="h-12 w-full rounded-lg border border-gray-300 font-medium text-gray-700 transition-colors hover:bg-gray-50"
           >
             Back
           </button>

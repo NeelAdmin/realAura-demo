@@ -13,8 +13,10 @@ import { FilterChips } from "../layout/serch-bar/filter-chips";
 import { SearchInput } from "../layout/serch-bar/search-input";
 import { usePathname } from "next/navigation";
 import { RegisterForm } from "../auth/RegisterForm";
+import { useAuth } from "@/feature/auth/useAuth";
 
 export function Navbar() {
+  const auth = useAuth();
   const [mobile, setMobile] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
@@ -43,8 +45,7 @@ export function Navbar() {
 
   const showBottomSection = true;
 
-  const showSearchBelow =
-    isHome || (!isHome && mobile);
+  const showSearchBelow = isHome || (!isHome && mobile);
 
   const showDesktopFilters = isDesktop;
   const showMobileFilters = mobile;
@@ -54,8 +55,7 @@ export function Navbar() {
       <div className="flex flex-col items-start gap-2">
         <header
           className={
-            "border-border w-full border-b px-1 lg:px-10 " +
-            (mobile ? "bg-black" : "bg-background")
+            "border-border w-full border-b px-1 lg:px-10 " + (mobile ? "bg-black" : "bg-background")
           }
         >
           <div className="flex h-20 items-center justify-between">
@@ -87,28 +87,23 @@ export function Navbar() {
 
             <div className="hidden items-center gap-10 lg:flex">
               <NavActions
+                isAuthenticated={auth.isAuthenticated}
+                user={auth.user}
                 setIsOpen={setIsOpen}
                 setIsPostPopupOpen={setIsPostPopupOpen}
                 setIsProfileRatingModalOpen={setIsProfileRatingModalOpen}
               />
             </div>
             <div className="lg:hidden">
-              <MobileMenu
-                setIsPostPopupOpen={setIsPostPopupOpen}
-              />
+              <MobileMenu setIsPostPopupOpen={setIsPostPopupOpen} />
             </div>
           </div>
         </header>
 
-        <div className="items-center px-6 lg:hidden">
-          {mobile && <NavLinks />}
-        </div>
+        <div className="items-center px-6 lg:hidden">{mobile && <NavLinks />}</div>
 
         {/* LOGIN MODAL – self managed */}
-        <LoginForm
-          open={isOpen}
-          onClose={() => setIsOpen(false)}
-        />
+        <LoginForm open={isOpen} onClose={() => setIsOpen(false)} />
 
         <RegisterForm
           open={registerOpen}
@@ -119,12 +114,8 @@ export function Navbar() {
           }}
         />
 
-
         {isPostPopupOpen && (
-          <OwnerSelectionModal
-            isOpen={isPostPopupOpen}
-            onClose={() => setIsPostPopupOpen(false)}
-          />
+          <OwnerSelectionModal isOpen={isPostPopupOpen} onClose={() => setIsPostPopupOpen(false)} />
         )}
 
         {isProfileRatingModalOpen && (
@@ -137,8 +128,7 @@ export function Navbar() {
 
       {showBottomSection && (
         <section className="flex w-full justify-center py-6">
-          <div className="flex w-full max-w-7xl flex-col gap-4 px-4 mx-auto">
-
+          <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 px-4">
             {showSearchBelow && (
               <div className="flex w-full justify-center">
                 <SearchInput />
@@ -146,7 +136,7 @@ export function Navbar() {
             )}
 
             {showDesktopFilters && (
-              <div className="hidden lg:flex w-full justify-center">
+              <div className="hidden w-full justify-center lg:flex">
                 <FilterChips />
               </div>
             )}
@@ -156,7 +146,6 @@ export function Navbar() {
                 <MobileFilters />
               </div>
             )}
-
           </div>
         </section>
       )}

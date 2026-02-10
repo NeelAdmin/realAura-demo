@@ -8,6 +8,8 @@ import Image from "next/image";
 import { OTPVerification } from "../auth/OTPVerification";
 import { useLoginWithMobileMutation } from "@/services/authApi";
 import { RegisterForm } from "@/components/auth/RegisterForm";
+import { useRouter } from "next/navigation";
+import { Input } from "../forms/Input";
 
 type LoginModalProps = {
   open: boolean;
@@ -37,8 +39,8 @@ const ROLE_OPTIONS = [
   },
 ] as const;
 
-
 export default function LoginForm({ open, onClose }: LoginModalProps) {
+  const router = useRouter();
   const [showRegister, setShowRegister] = useState(false);
   const [showOTP, setShowOTP] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -59,13 +61,9 @@ export default function LoginForm({ open, onClose }: LoginModalProps) {
 
   const selectedRole = watch("role");
 
-  const roleForApi =
-    ROLE_OPTIONS.find((r) => r.value === selectedRole)?.apiValue;
+  const roleForApi = ROLE_OPTIONS.find((r) => r.value === selectedRole)?.apiValue;
 
   const handleLogin = async (data: LoginFormData) => {
-    // const roleForApi =
-    //   ROLE_OPTIONS.find((r) => r.value === data.role)?.apiValue;
-
     const response = await loginWithMobile({
       mobile: `${data.phone}`,
       role: roleForApi as any,
@@ -84,85 +82,61 @@ export default function LoginForm({ open, onClose }: LoginModalProps) {
       {/* LOGIN MODAL */}
       {!showRegister && !showOTP && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-md bg-white rounded-xl py-8 px-10">
-            <button
-              type="button"
-              onClick={onClose}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
-              aria-label="Close"
-            >
-              ✕
-            </button>
+          <div className="w-full max-w-md rounded-xl bg-white px-10 py-8">
+            <div className="mb-6 flex items-center justify-between">
+              <h2 className="text-[24px] font-medium">Log in</h2>
+              <button
+                type="button"
+                onClick={onClose}
+                className="text-gray-400 hover:text-gray-600"
+                aria-label="Close"
+              >
+                ✕
+              </button>
+            </div>
 
-            <h2 className="text-[24px] font-medium mb-6">Log in</h2>
-
-            <form
-              onSubmit={handleSubmit(handleLogin)}
-              className="flex flex-col gap-6"
-            >
+            <form onSubmit={handleSubmit(handleLogin)} className="flex flex-col gap-6">
               <div>
                 <label className="text-xs text-gray-600">I am a</label>
-                <div className="grid grid-cols-3 gap-2 mt-1">
-                  {ROLE_OPTIONS.map((role) => (
-                    <label
-                      key={role.value}
-                      className={`border rounded-md text-xs p-2 text-center cursor-pointer ${selectedRole === role.value ? "border-secondary-end" : ""
-                        }`}
-                    >
-                      <input
-                        type="radio"
-                        value={role.value}
-                        className="sr-only"
-                        {...register("role")}
-                      />
-                      {role.label}
-                    </label>
-
+                <div className="mt-1 grid grid-cols-3 gap-2">
+                  {ROLE_OPTIONS.map((role, index) => (
+                    <div className="space-y-2" key={index}>
+                      <Input as="radio" value={role.value} {...register("role")}>
+                        {role.label}
+                      </Input>
+                    </div>
                   ))}
                 </div>
               </div>
 
               <div className="relative h-[45px]">
-                <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center">
-                  <Image
-                    src="/images/flag.png"
-                    alt="India"
-                    width={20}
-                    height={14}
-                  />
+                <div className="absolute top-1/2 left-4 flex -translate-y-1/2 items-center">
+                  <Image src="/images/flag.png" alt="India" width={20} height={14} />
                   <span className="ml-2">+91</span>
                 </div>
 
                 <input
                   {...register("phone")}
-                  className="w-full h-full pl-[90px] border rounded-lg"
+                  className="h-full w-full rounded-lg border pl-[90px]"
                   placeholder="Enter Phone Number"
                 />
               </div>
 
-              {errors.phone && (
-                <p className="text-red-600 text-sm">
-                  {errors.phone.message}
-                </p>
-              )}
+              {errors.phone && <p className="text-sm text-red-600">{errors.phone.message}</p>}
 
               <button
                 disabled={isLoading}
-                className="h-[45px] bg-gradient-to-r from-secondary-start to-secondary-end text-white rounded-lg"
+                className="from-secondary-start to-secondary-end h-[45px] rounded-lg bg-gradient-to-r text-white"
               >
                 {isLoading ? "Sending OTP..." : "Send One Time Password"}
               </button>
             </form>
 
-            <div className="flex items-center gap-2 text-sm mt-4">
+            <div className="mt-4 flex items-center gap-2 text-sm">
               <span>New to Realaura? </span>
-              <button
-                onClick={() => setShowRegister(true)}
-                className="text-secondary-end"
-              >
+              <button onClick={() => setShowRegister(true)} className="text-secondary-end">
                 Create Account
               </button>
-
             </div>
           </div>
         </div>
@@ -182,17 +156,21 @@ export default function LoginForm({ open, onClose }: LoginModalProps) {
 
       {/* OTP MODAL */}
       {showOTP && (
-        <OTPVerification
-          phoneNumber={phoneNumber}
-          role={roleForApi as any}
-          type="LOGIN"
-          onGoBack={() => setShowOTP(false)}
-          onSuccess={() => {
-            setShowOTP(false);
-            onClose();
-          }}
-        />
-
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="w-full max-w-md rounded-xl bg-white px-10 py-8">
+            <OTPVerification
+              phoneNumber={phoneNumber}
+              role={roleForApi as any}
+              type="LOGIN"
+              onGoBack={() => setShowOTP(false)}
+              onSuccess={() => {
+                setShowOTP(false);
+                onClose();
+                router.push("/");
+              }}
+            />
+          </div>
+        </div>
       )}
     </>
   );
