@@ -1,8 +1,6 @@
 import { forwardRef } from "react";
 import { SectionIdentityLabel } from "../layout/RentalAura/Common/TitleField";
 
-/* ===================== TYPES ===================== */
-
 type Variant = "boxed" | "underline";
 type FieldType = "input" | "select" | "textarea" | "radio" | "checkbox";
 
@@ -14,18 +12,12 @@ interface BaseProps {
   className?: string;
 }
 
-/**
- * Unified props for all field types
- */
-type Props =
-  BaseProps &
+type Props = BaseProps &
   React.InputHTMLAttributes<HTMLInputElement> &
   React.SelectHTMLAttributes<HTMLSelectElement> &
   React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
-/* ===================== COMPONENT ===================== */
-
-export const Input = forwardRef<
+export const FormField = forwardRef<
   HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement,
   Props
 >(
@@ -34,25 +26,21 @@ export const Input = forwardRef<
       label,
       error,
       variant = "boxed",
-      as = "input", // ✅ default is normal text input
+      as = "input",
       className = "",
       children,
       ...props
     },
     ref
   ) => {
-    /* ---------- BASE STYLES ---------- */
-
     const baseControl = `
-      w-full
-      text-sm
-      text-gray-900
+      w-full text-sm text-gray-900
       placeholder:text-gray-400
       focus:outline-none
       disabled:cursor-not-allowed
     `;
 
-    const variants: Record<Variant, string> = {
+    const variants = {
       boxed: `
         px-3 py-3
         bg-white
@@ -82,8 +70,6 @@ export const Input = forwardRef<
       ${error ? "border-red-500 focus:ring-red-500" : ""}
     `;
 
-    /* ---------- FIELD RENDER ---------- */
-
     const renderField = () => {
       switch (as) {
         case "select":
@@ -109,19 +95,17 @@ export const Input = forwardRef<
         case "radio":
         case "checkbox":
           return (
-            <label className="flex items-center gap-2 cursor-pointer">
+            <div className="flex items-center gap-2">
               <input
                 ref={ref as React.Ref<HTMLInputElement>}
                 type={as}
-                className="h-4 w-4 accent-red-500"
+                className="h-4 w-4 accent-yellow-500"
                 {...props}
               />
               {children && (
-                <span className="text-sm text-gray-700">
-                  {children}
-                </span>
+                <span className="text-sm text-gray-700">{children}</span>
               )}
-            </label>
+            </div>
           );
 
         default:
@@ -135,30 +119,18 @@ export const Input = forwardRef<
       }
     };
 
-    /* ---------- JSX ---------- */
-
     return (
       <div className={`w-full ${className}`}>
-        {/* Label */}
         {label && (
-          <SectionIdentityLabel
-            label={label}
-            className={labelClass}
-          />
+          <SectionIdentityLabel label={label} className={labelClass} />
         )}
 
-        {/* Field */}
         {renderField()}
 
-        {/* Error */}
-        {error && (
-          <p className="mt-1 text-xs text-red-600">
-            {error}
-          </p>
-        )}
+        {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
       </div>
     );
   }
 );
 
-Input.displayName = "Input";
+FormField.displayName = "FormField";

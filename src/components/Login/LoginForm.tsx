@@ -4,179 +4,196 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "@/lib/validations/auth.schema";
-import * as yup from "yup";
 import Image from "next/image";
 import { OTPVerification } from "../auth/OTPVerification";
+import { useLoginWithMobileMutation } from "@/services/authApi";
+import { RegisterForm } from "@/components/auth/RegisterForm";
 
-type LoginFormData = yup.InferType<typeof loginSchema>;
+type LoginModalProps = {
+  open: boolean;
+  onClose: () => void;
+};
 
-function LoginForm({ onSwitchToForgot, onSwitchToRegister }: { onSwitchToForgot: () => void, onSwitchToRegister: () => void }) {
+type LoginFormData = {
+  phone: string;
+  role: "owner" | "tenant" | "referral_owner";
+};
+
+const ROLE_OPTIONS = [
+  {
+    value: "owner",
+    label: "Owner",
+    apiValue: "OWNER",
+  },
+  {
+    value: "tenant",
+    label: "Tenant",
+    apiValue: "TENANT",
+  },
+  {
+    value: "referral_owner",
+    label: "Referral Owner",
+    apiValue: "AFFILIATE",
+  },
+] as const;
+
+
+export default function LoginForm({ open, onClose }: LoginModalProps) {
+  const [showRegister, setShowRegister] = useState(false);
+  const [showOTP, setShowOTP] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState("");
+
+  const [loginWithMobile, { isLoading }] = useLoginWithMobileMutation();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<LoginFormData>({
     resolver: yupResolver(loginSchema),
-    mode: "onChange",
+    defaultValues: {
+      role: "owner",
+    },
   });
 
+  const selectedRole = watch("role");
 
+  const roleForApi =
+    ROLE_OPTIONS.find((r) => r.value === selectedRole)?.apiValue;
 
-  const [showOTP, setShowOTP] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const handleLogin = async (data: LoginFormData) => {
+    // const roleForApi =
+    //   ROLE_OPTIONS.find((r) => r.value === data.role)?.apiValue;
 
-  const onSubmit = async (data: LoginFormData) => {
-    console.log("Login data:", data);
+    const response = await loginWithMobile({
+      mobile: `${data.phone}`,
+      role: roleForApi as any,
+    }).unwrap();
 
-    // 1. Save phone number
-    setPhoneNumber(`+91 ${data.phone}`);
-
-    // 2. Call your OTP API here
-    // await sendOtp(data.phone);
-
-    // 3. Show OTP screen
-    setShowOTP(true);
+    if (response.status === "SUCCESS") {
+      setPhoneNumber(`+91${data.phone}`);
+      setShowOTP(true);
+    }
   };
-  if (showOTP) {
-    return (
-      <OTPVerification
-        phoneNumber={phoneNumber}
-        onVerify={async (otp) => {
-          console.log("Verifying OTP:", otp);
 
-          // TODO: verify OTP API
-          // await verifyOtp({ phoneNumber, otp });
-
-          // success → close modal / redirect
-        }}
-        onResend={async () => {
-          console.log("Resending OTP to", phoneNumber);
-
-          // TODO: resend OTP API
-          // await resendOtp(phoneNumber);
-        }}
-        onGoBack={() => {
-          setShowOTP(false);
-        }}
-      />
-    );
-  }
+  if (!open) return null;
 
   return (
-    <div className="flex flex-col gap-[37px]">
-      <div className="flex flex-col gap-6">
-        <h2 className="text-[24px] leading-[24px] font-medium text-[#111111] font-avenir">
-          Log in
-        </h2>
+    <>
+      {/* LOGIN MODAL */}
+      {!showRegister && !showOTP && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="w-full max-w-md bg-white rounded-xl py-8 px-10">
+            <button
+              type="button"
+              onClick={onClose}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+              aria-label="Close"
+            >
+              ✕
+            </button>
 
-        <div className="flex flex-col gap-6">
-          <div>
-            <div className="relative h-[45px]">
-              <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center">
-                <Image
-                  src="/images/flag.png"
-                  alt="India"
-                  width={20}
-                  height={14}
-                  className="object-cover"
-                />
+            <h2 className="text-[24px] font-medium mb-6">Log in</h2>
 
-                <span className="ml-2 text-sm font-medium text-gray-600">
-                  +91
-                </span>
+            <form
+              onSubmit={handleSubmit(handleLogin)}
+              className="flex flex-col gap-6"
+            >
+              <div>
+                <label className="text-xs text-gray-600">I am a</label>
+                <div className="grid grid-cols-3 gap-2 mt-1">
+                  {ROLE_OPTIONS.map((role) => (
+                    <label
+                      key={role.value}
+                      className={`border rounded-md text-xs p-2 text-center cursor-pointer ${selectedRole === role.value ? "border-secondary-end" : ""
+                        }`}
+                    >
+                      <input
+                        type="radio"
+                        value={role.value}
+                        className="sr-only"
+                        {...register("role")}
+                      />
+                      {role.label}
+                    </label>
 
-                <div className="mx-5 h-[29px] w-px bg-[#DDDDDD]" />
+                  ))}
+                </div>
               </div>
 
-              <input
-                {...register("phone")}
-                type="tel"
-                inputMode="numeric"
-                pattern="[0-9]*"
-                placeholder="Enter Your Phone Number"
-                className="
-                w-full h-full
-                pl-[106px] pr-4
-                border border-[#A6A6A6CC] rounded-lg
-                text-sm
-                focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent
-                placeholder:text-[#000000]"
-                onInput={(e: any) => {
-                  e.target.value = e.target.value.replace(/[^0-9]/g, "");
-                }}
-              />
-            </div>
+              <div className="relative h-[45px]">
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center">
+                  <Image
+                    src="/images/flag.png"
+                    alt="India"
+                    width={20}
+                    height={14}
+                  />
+                  <span className="ml-2">+91</span>
+                </div>
 
-            {errors.phone && (
-              <p className="mt-1 text-sm text-red-600">
-                {errors.phone.message}
-              </p>
-            )}
+                <input
+                  {...register("phone")}
+                  className="w-full h-full pl-[90px] border rounded-lg"
+                  placeholder="Enter Phone Number"
+                />
+              </div>
+
+              {errors.phone && (
+                <p className="text-red-600 text-sm">
+                  {errors.phone.message}
+                </p>
+              )}
+
+              <button
+                disabled={isLoading}
+                className="h-[45px] bg-gradient-to-r from-secondary-start to-secondary-end text-white rounded-lg"
+              >
+                {isLoading ? "Sending OTP..." : "Send One Time Password"}
+              </button>
+            </form>
+
+            <div className="flex items-center gap-2 text-sm mt-4">
+              <span>New to Realaura? </span>
+              <button
+                onClick={() => setShowRegister(true)}
+                className="text-secondary-end"
+              >
+                Create Account
+              </button>
+
+            </div>
           </div>
-
-          <button
-            type="button"
-            onClick={handleSubmit(onSubmit)}
-            className="w-full h-[45px] bg-gradient-to-r from-secondary-start to-secondary-end text-white rounded-lg text-[16px]  font-medium hover:opacity-90 transition-opacity"
-          >
-            Send One Time Password
-          </button>
-
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500 text-[20px] md:text-[23px]">
-                Or
-              </span>
-            </div>
-          </div>
-
-          <button
-            type="button"
-            className="w-full h-[45px] border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
-          >
-            <Image
-              src={"/images/Email-Icon-full-yellow.png"}
-              alt="Email"
-              width={20}
-              height={16}
-            />
-            Continue with Email
-          </button>
-
-          <button
-            type="button"
-            className="w-full h-[45px] border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
-          >
-            <Image
-              src="/images/Google.png"
-              alt="Google"
-              width={24}
-              height={24}
-            />
-            Continue with Google
-          </button>
         </div>
-      </div>
+      )}
 
-      <div className="flex flex-col md:flex-row md:items-center justify-between text-sm md:h-[19px] gap-3 md:gap-0 text-[16px] md:text-[16px]">
-        <div>
-          <span className="text-[#000000] font-normal">New to Realaura ? </span>
-          <button className="text-secondary-end font-medium hover:underline text-[16px] md:text-[16px]" onClick={onSwitchToRegister}>
-            Create Account
-          </button>
-        </div>
-        <button
-          onClick={onSwitchToForgot}
-          className="text-[#000000] font-normal text-left md:text-right text-[16px] md:text-[16px]"
-        >
-          Forgot Account?
-        </button>
-      </div>
-    </div>
+      {/* REGISTER MODAL */}
+      {showRegister && (
+        <RegisterForm
+          open={showRegister}
+          onOpenLogin={() => setShowRegister(false)}
+          onClose={() => {
+            setShowRegister(false);
+            onClose();
+          }}
+        />
+      )}
+
+      {/* OTP MODAL */}
+      {showOTP && (
+        <OTPVerification
+          phoneNumber={phoneNumber}
+          role={roleForApi as any}
+          type="LOGIN"
+          onGoBack={() => setShowOTP(false)}
+          onSuccess={() => {
+            setShowOTP(false);
+            onClose();
+          }}
+        />
+
+      )}
+    </>
   );
 }
-
-export default LoginForm;

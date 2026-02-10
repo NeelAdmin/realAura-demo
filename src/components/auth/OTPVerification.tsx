@@ -3,12 +3,15 @@
 import { useForm } from 'react-hook-form';
 import { AppButton } from '@/components/ui/AppButton';
 import { useEffect, useState } from 'react';
+import { useVerifyOtpMutation } from '@/services/authApi';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface OTPVerificationProps {
   phoneNumber: string;
-  onVerify: (otp: string) => Promise<void>;
-  onResend: () => Promise<void>;
+  role: 'OWNER' | 'TENANT' | 'AFFILIATE';
+  type: 'LOGIN' | 'REGISTER';
   onGoBack: () => void;
+  onSuccess?: () => void;
   countdownSeconds?: number;
 }
 
@@ -18,69 +21,79 @@ type OTPForm = {
 
 export function OTPVerification({
   phoneNumber,
-  onVerify,
-  onResend,
+  role,
+  type,
   onGoBack,
+  onSuccess,
   countdownSeconds = 30,
 }: OTPVerificationProps) {
+  const { login } = useAuth();
   const {
     register,
     handleSubmit,
     setValue,
     setFocus,
+    formState: { errors },
     watch,
   } = useForm<OTPForm>({
     defaultValues: {
-      otp: ['', '', '', ''],
+      otp: ['', '', '', '', '', ''],
     },
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [verifyOtp, { isLoading }] = useVerifyOtpMutation();
   const [countdown, setCountdown] = useState(countdownSeconds);
 
   const otp = watch('otp');
 
-  /* -------------------- HANDLERS -------------------- */
-
   const handleOtpChange = (value: string, index: number) => {
-    if (!/^\d?$/.test(value)) return;
+    if (!/^\d*$/.test(value)) return;
 
     setValue(`otp.${index}`, value);
 
-    if (value && index < 3) {
+    if (value && index < 5) {
       setFocus(`otp.${index + 1}`);
     }
   };
 
-  const handleKeyDown = (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    index: number
-  ) => {
-    if (e.key === 'Backspace') {
-      if (otp[index]) {
-        setValue(`otp.${index}`, '');
-      } else if (index > 0) {
-        setFocus(`otp.${index - 1}`);
-        setValue(`otp.${index - 1}`, '');
-      }
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
+    if (e.key === 'Backspace' && !otp[index] && index > 0) {
+      setFocus(`otp.${index - 1}`);
     }
   };
 
   const onSubmit = async (data: OTPForm) => {
     try {
-      setIsSubmitting(true);
-      await onVerify(data.otp.join(''));
-    } finally {
-      setIsSubmitting(false);
+      const code = data.otp.join('');
+
+      if (code.length !== 6) return;
+
+      const response = await verifyOtp({
+        mobile: phoneNumber,
+        code,
+        type,
+        role,
+      }).unwrap();
+
+      if (response.status === 'SUCCESS' && response.data) {
+        // Store tokens and update auth state
+        login({
+          accessToken: response.data.access_token as string,
+          refreshToken: response.data.refresh_token as string,
+        });
+        
+        // Call the success callback if provided
+        onSuccess?.();
+      }
+    } catch (error) {
+      console.error('❌ OTP verification failed', error);
     }
   };
 
-  const handleResendClick = async () => {
-    await onResend();
+  const handleResend = () => {
     setCountdown(countdownSeconds);
+    // call resend OTP API here if you have one
   };
-
-  /* -------------------- EFFECTS -------------------- */
 
   // Auto-focus first OTP box
   useEffect(() => {
@@ -92,76 +105,67 @@ export function OTPVerification({
     if (countdown <= 0) return;
 
     const timer = setTimeout(() => {
-      setCountdown((c) => c - 1);
+      setCountdown(countdown - 1);
     }, 1000);
 
     return () => clearTimeout(timer);
   }, [countdown]);
 
-  /* -------------------- UI -------------------- */
-
   return (
-    <div className="w-full max-w-md mx-auto rounded-xl bg-white p-6 flex flex-col">
-      {/* Header */}
+    <div className="w-full max-w-md mx-auto">
       <div className="text-center mb-6">
-        <h2 className="text-2xl font-semibold text-gray-900 mb-2">
-          Verify OTP
-        </h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">Verify OTP</h2>
         <p className="text-sm text-gray-600">
-          We&apos;ve sent a verification code to
+          We've sent a verification code to
           <span className="font-medium"> {phoneNumber}</span>
         </p>
       </div>
 
-      {/* Form */}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* OTP Inputs */}
         <div className="flex gap-2">
-          {[0, 1, 2, 3].map((index) => (
+          {[0, 1, 2, 3, 4, 5].map((index) => (
             <input
               key={index}
               type="tel"
               inputMode="numeric"
+              pattern="[0-9]*"
               maxLength={1}
-              className="
-                w-full h-14
-                text-center text-2xl font-semibold
-                border border-gray-300 rounded-lg
-                focus:outline-none
-                focus:ring-2 focus:ring-secondary-start
-                focus:border-transparent
-              "
-              {...register(`otp.${index}`)}
-              onChange={(e) => handleOtpChange(e.target.value, index)}
+              className="w-12 h-12 text-center text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+              {...register(`otp.${index}`, {
+                required: true,
+                onChange: (e) => handleOtpChange(e.target.value, index),
+              })}
               onKeyDown={(e) => handleKeyDown(e, index)}
+              autoComplete="one-time-code"
             />
           ))}
         </div>
 
-        {/* Resend */}
-        <div className="text-center text-sm">
+        {/* Resend OTP */}
+        <div className="text-center">
           {countdown > 0 ? (
-            <span className="text-gray-500">
+            <p className="text-sm text-gray-500">
               Resend OTP in {countdown}s
-            </span>
+            </p>
           ) : (
             <button
               type="button"
-              onClick={handleResendClick}
-              className="font-medium text-secondary-end hover:underline"
+              onClick={handleResend}
+              className="text-sm font-medium text-primary hover:underline"
             >
               Resend OTP
             </button>
           )}
         </div>
 
-        {/* Actions */}
+        {/* Submit Button */}
         <div className="space-y-3">
           <AppButton
             type="submit"
-            label={isSubmitting ? 'Verifying...' : 'Verify OTP'}
+            label={isLoading ? 'Verifying...' : 'Verify OTP'}
             className="w-full h-12 bg-gradient-to-r from-secondary-start to-secondary-end text-white rounded-lg font-medium"
-            disabled={isSubmitting}
+            disabled={isLoading}
           />
 
           <button
@@ -169,7 +173,7 @@ export function OTPVerification({
             onClick={onGoBack}
             className="w-full h-12 border border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50 transition-colors"
           >
-            Back to Login
+            Back
           </button>
         </div>
       </form>

@@ -5,6 +5,11 @@ const loginSchema = yup.object({
     .string()
     .required("Phone number is required")
     .matches(/^[0-9]{10}$/, "Please enter a valid 10-digit phone number."),
+
+     role: yup
+    .mixed<"owner" | "tenant" | "referral_owner">()
+    .oneOf(["owner", "tenant", "referral_owner"])
+    .required("Role is required"),
 });
 
 const forgotPasswordSchema = yup.object({

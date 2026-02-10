@@ -3,15 +3,15 @@
 import { useState } from "react";
 import { AppButton } from "@/components/ui/AppButton";
 import Image from "next/image";
+import LoginForm from "../../Login/LoginForm";
 
 export function MobileMenu({
-  setIsOpen,
   setIsPostPopupOpen,
 }: {
-  setIsOpen: (open: boolean) => void;
   setIsPostPopupOpen: (open: boolean) => void;
 }) {
   const [open, setOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   return (
     <>
@@ -42,12 +42,13 @@ export function MobileMenu({
             <a className="text-lg font-bold">Rent</a>
             <a className="text-lg font-bold">Sell</a>
             <a className="text-lg font-bold">Upcoming Projects</a>
-            <a className="text-lg font-bold" onClick={() => setIsOpen(true)}>
+            <a className="text-lg font-bold" onClick={() => {setIsLoginOpen(true); setOpen(false)}}>
               Login
             </a>
           </nav>
         </div>
       )}
+      {isLoginOpen && <LoginForm open={isLoginOpen} onClose={() => setIsLoginOpen(false)} />}
     </>
   );
 }
