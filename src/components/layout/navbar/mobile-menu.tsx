@@ -4,6 +4,9 @@ import { useState } from "react";
 import { AppButton } from "@/components/ui/AppButton";
 import Image from "next/image";
 import LoginForm from "../../Login/LoginForm";
+import { useSelector } from 'react-redux';
+import { RootState } from '@/lib/store';
+import Link from "next/link";
 
 export function MobileMenu({
   setIsPostPopupOpen,
@@ -12,6 +15,10 @@ export function MobileMenu({
 }) {
   const [open, setOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+
+  console.log(isAuthenticated);
 
   return (
     <>
@@ -39,12 +46,17 @@ export function MobileMenu({
           </div>
 
           <nav className="mt-10 flex flex-col gap-6">
-            <a className="text-lg font-bold">Rent</a>
-            <a className="text-lg font-bold">Sell</a>
-            <a className="text-lg font-bold">Upcoming Projects</a>
-            <a className="text-lg font-bold" onClick={() => {setIsLoginOpen(true); setOpen(false)}}>
-              Login
-            </a>
+            <Link href="/rent" onClick={() => setOpen(false)} className="text-lg font-bold">Rent</Link>
+            <Link href="/" onClick={() => setOpen(false)} className="text-lg font-bold">Sell</Link>
+            <Link href="/upcoming-projects" onClick={() => setOpen(false)} className="text-lg font-bold">Upcoming Projects</Link>
+            {isAuthenticated && (
+              <Link href="/dashboard" onClick={() => setOpen(false)} className="text-lg font-bold">Dashboard</Link>
+            )}
+            {!isAuthenticated && (
+              <Link href="" onClick={() => {setIsLoginOpen(true); setOpen(false)}} className="text-lg font-bold">
+                Login
+              </Link>
+            )}
           </nav>
         </div>
       )}

@@ -107,12 +107,32 @@ export const Input = forwardRef<
           );
 
         case "radio":
+          return (
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                ref={ref as React.Ref<HTMLInputElement>}
+                type="radio"
+                className="h-4 w-4 accent-yellow-500"
+                {...props}
+              />
+
+              {children && (
+                <span className="text-sm text-gray-700">
+                  {children}
+                </span>
+              )}
+            </label>
+          );
+
+
+
+
         case "checkbox":
           return (
             <label className="flex items-center gap-2 cursor-pointer">
               <input
                 ref={ref as React.Ref<HTMLInputElement>}
-                type={as}
+                type="checkbox"
                 className="h-4 w-4 accent-red-500"
                 {...props}
               />
@@ -123,6 +143,7 @@ export const Input = forwardRef<
               )}
             </label>
           );
+
 
         default:
           return (

@@ -10,7 +10,7 @@ import { OTPVerification } from "./OTPVerification";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import LoginForm from "../Login/LoginForm";
-
+import { showSuccess, showError } from "@/utils/toast";
 interface RegisterFormProps {
   open: boolean;
   onClose: () => void;
@@ -50,6 +50,7 @@ export function RegisterForm({ open, onClose, onOpenLogin }: RegisterFormProps) 
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(registerSchema) as any,
@@ -64,7 +65,7 @@ export function RegisterForm({ open, onClose, onOpenLogin }: RegisterFormProps) 
   const isTenant = selectedRole === "tenant";
 
   const roleForApi = ROLE_OPTIONS.find((r) => r.value === selectedRole)?.apiValue;
-
+console.log(roleForApi);  
   const onSubmit: SubmitHandler<FormData> = async (formData) => {
     try {
       const payload = {
@@ -85,11 +86,14 @@ export function RegisterForm({ open, onClose, onOpenLogin }: RegisterFormProps) 
       const response = await registerUser(payload).unwrap();
 
       if (response.status === "SUCCESS") {
+        showSuccess("User registered successfully");
         setPhoneNumber(`+91${formData.mobile}`);
         setShowOTP(true);
+        reset();
       }
-    } catch (error) {
+    } catch (error :any) {
       console.error(error);
+      showError(error?.data?.message || "Something went wrong");
     }
   };
 
@@ -103,7 +107,7 @@ export function RegisterForm({ open, onClose, onOpenLogin }: RegisterFormProps) 
           <div className="absolute inset-0 bg-black/50" onClick={onClose} />
 
           <div className="relative w-full max-w-md">
-            <div className="mx-auto flex max-h-[550px] w-full max-w-md flex-col rounded-xl bg-white px-10 py-6">
+            <div className="mx-auto flex w-full max-w-md flex-col rounded-xl bg-white px-10 py-6">
               <h2 className="mb-3 shrink-0 text-center text-lg font-semibold">Create Account</h2>
 
               <form
@@ -112,7 +116,6 @@ export function RegisterForm({ open, onClose, onOpenLogin }: RegisterFormProps) 
               >
                 <div className="flex-1 space-y-3 overflow-y-auto px-1 py-2">
                   <div>
-                    <label className="mb-1 block text-xs font-medium text-gray-600">I am a</label>
 
                     <div className="grid grid-cols-3 gap-2">
                       {[
@@ -182,7 +185,7 @@ export function RegisterForm({ open, onClose, onOpenLogin }: RegisterFormProps) 
                   )}
                 </div>
 
-                <div className="mt-3 shrink-0 border-t bg-white pt-3">
+                <div className="mt-3 bg-white pt-3">
                   <AppButton
                     type="submit"
                     label={isLoading ? "Creating..." : "Create Account"}
@@ -198,6 +201,7 @@ export function RegisterForm({ open, onClose, onOpenLogin }: RegisterFormProps) 
                   type="button"
                   onClick={() => {
                     onOpenLogin();
+                    reset();
                   }}
                   className="text-secondary-end font-medium hover:underline"
                 >
@@ -217,9 +221,6 @@ export function RegisterForm({ open, onClose, onOpenLogin }: RegisterFormProps) 
               phoneNumber={phoneNumber}
               role={roleForApi as any}
               type="REGISTER"
-              onGoBack={() => {
-                setShowOTP(false);
-              }}
               onSuccess={() => {
                 setShowOTP(false);
                 onClose();

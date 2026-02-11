@@ -10,6 +10,8 @@ import { useLoginWithMobileMutation } from "@/services/authApi";
 import { RegisterForm } from "@/components/auth/RegisterForm";
 import { useRouter } from "next/navigation";
 import { Input } from "../forms/Input";
+import { showSuccess, showError } from "@/utils/toast";
+import { XIcon } from "lucide-react";
 
 type LoginModalProps = {
   open: boolean;
@@ -52,6 +54,7 @@ export default function LoginForm({ open, onClose }: LoginModalProps) {
     handleSubmit,
     formState: { errors },
     watch,
+    reset,
   } = useForm<LoginFormData>({
     resolver: yupResolver(loginSchema),
     defaultValues: {
@@ -64,14 +67,20 @@ export default function LoginForm({ open, onClose }: LoginModalProps) {
   const roleForApi = ROLE_OPTIONS.find((r) => r.value === selectedRole)?.apiValue;
 
   const handleLogin = async (data: LoginFormData) => {
-    const response = await loginWithMobile({
-      mobile: `${data.phone}`,
-      role: roleForApi as any,
-    }).unwrap();
-
-    if (response.status === "SUCCESS") {
-      setPhoneNumber(`+91${data.phone}`);
-      setShowOTP(true);
+    try {
+      const response = await loginWithMobile({
+        mobile: `${data.phone}`,
+        role: roleForApi as any,
+      }).unwrap();
+  
+      if (response.status === "SUCCESS") {
+        showSuccess("OTP sent successfully");
+        setPhoneNumber(`+91${data.phone}`);
+        setShowOTP(true);
+        reset();
+      }
+    } catch (error : any) {
+      showError(error?.data?.message || "Something went wrong");
     }
   };
 
@@ -87,17 +96,16 @@ export default function LoginForm({ open, onClose }: LoginModalProps) {
               <h2 className="text-[24px] font-medium">Log in</h2>
               <button
                 type="button"
-                onClick={onClose}
+                onClick={() => {onClose();reset()}}
                 className="text-gray-400 hover:text-gray-600"
                 aria-label="Close"
               >
-                ✕
+                <XIcon />
               </button>
             </div>
 
             <form onSubmit={handleSubmit(handleLogin)} className="flex flex-col gap-6">
               <div>
-                <label className="text-xs text-gray-600">I am a</label>
                 <div className="mt-1 grid grid-cols-3 gap-2">
                   {ROLE_OPTIONS.map((role, index) => (
                     <div className="space-y-2" key={index}>
@@ -134,7 +142,7 @@ export default function LoginForm({ open, onClose }: LoginModalProps) {
 
             <div className="mt-4 flex items-center gap-2 text-sm">
               <span>New to Realaura? </span>
-              <button onClick={() => setShowRegister(true)} className="text-secondary-end">
+              <button onClick={() => {setShowRegister(true); reset();}} className="text-secondary-end">
                 Create Account
               </button>
             </div>
@@ -162,7 +170,6 @@ export default function LoginForm({ open, onClose }: LoginModalProps) {
               phoneNumber={phoneNumber}
               role={roleForApi as any}
               type="LOGIN"
-              onGoBack={() => setShowOTP(false)}
               onSuccess={() => {
                 setShowOTP(false);
                 onClose();

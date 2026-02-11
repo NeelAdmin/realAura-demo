@@ -2,7 +2,7 @@ import { Footer } from "@/components/common/Footer";
 import "./globals.css";
 import { Navbar } from "@/components/common/Navbar";
 import { ReduxProvider } from "@/lib/providers";
-import { AuthProvider } from "@/contexts/AuthContext";
+import { Toaster } from "react-hot-toast";
 
 export const metadata = {
   title: "RealAura",
@@ -14,11 +14,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="bg-background text-foreground font-sans">
         <ReduxProvider>
-          <AuthProvider>
-            <Navbar />
-            {children}
-            <Footer />
-          </AuthProvider>
+          <Navbar />
+          {children}
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              style: {
+                borderRadius: "8px",
+                padding: "12px 16px",
+                fontSize: "14px",
+                boxShadow: "0px 4px 8px rgba(0,0,0,0.05)",
+              },
+            }}
+          />
+          <Footer />
         </ReduxProvider>
       </body>
     </html>
