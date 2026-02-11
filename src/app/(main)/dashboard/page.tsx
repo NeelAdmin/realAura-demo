@@ -1,49 +1,62 @@
-'use client';
+"use client";
 
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 import {
   selectCurrentUser,
   selectIsAuthenticated,
   selectIsLoading,
-} from '@/feature/auth/authSlice';
-import { redirect } from 'next/navigation';
-import OwnerDashboard from '@/app/(main)/dashboard/components/ownerDashboard';
-import TenantDashboard from '@/app/(main)/dashboard/components/TenateDashboard';
+} from "@/feature/auth/authSlice";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+
+import OwnerDashboard from "@/app/(main)/dashboard/components/ownerDashboard";
+import TenantDashboard from "@/app/(main)/dashboard/components/TenateDashboard";
+import Sidebar from "./components/sidebar/Sidebar";
 
 export default function DashboardPage() {
+  const router = useRouter();
   const user = useSelector(selectCurrentUser);
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const isLoading = useSelector(selectIsLoading);
 
-  /* -------------------- LOADING -------------------- */
+  useEffect(() => {
+    if (!isLoading && (!isAuthenticated || !user)) {
+      router.replace("/");
+    }
+  }, [isLoading, isAuthenticated, user]);
+
   if (isLoading) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <p className="text-gray-500">Loading dashboard...</p>
-      </div>
-    );
+    return <div className="flex h-screen items-center justify-center">Loading dashboard...</div>;
   }
 
-  /* -------------------- NOT AUTHENTICATED -------------------- */
-  if (!isAuthenticated || !user) {
-    redirect('/'); // or /login
-  }
+  if (!isAuthenticated || !user) return null;
 
   /* -------------------- ROLE BASED DASHBOARD -------------------- */
-  switch (user.role) {
-    case 'OWNER':
-      return <OwnerDashboard />;
+  const renderDashboard = () => {
+    switch (user.role) {
+      case "OWNER":
+        return <OwnerDashboard />;
+      case "TENANT":
+        return <TenantDashboard />;
+      default:
+        return (
+          <div className="flex h-screen items-center justify-center">
+            <p className="text-red-600">Unauthorized role access</p>
+          </div>
+        );
+    }
+  };
 
-    case 'TENANT':
-      return <TenantDashboard />;
+  /* -------------------- FINAL LAYOUT -------------------- */
+  return (
+    <div className="flex h-screen bg-gray-100">
+      {/* Sidebar - Desktop */}
+      <div className="hidden md:block">
+        <Sidebar />
+      </div>
 
-    default:
-      return (
-        <div className="flex h-screen items-center justify-center">
-          <p className="text-red-600">
-            Unauthorized role access
-          </p>
-        </div>
-      );
-  }
+      {/* Main Content */}
+      <div className="flex-1 overflow-y-auto">{renderDashboard()}</div>
+    </div>
+  );
 }

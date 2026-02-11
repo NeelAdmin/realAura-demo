@@ -5,7 +5,7 @@ import { AppButton } from "@/components/ui/AppButton";
 import { useEffect, useState } from "react";
 import { useVerifyOtpMutation } from "@/services/authApi";
 import { useDispatch } from "react-redux";
-import { useLazyGetProfileQuery } from '@/services/userApi';
+import { useLazyGetProfileQuery } from "@/services/userApi";
 import { setCredentials } from "@/feature/auth/authSlice";
 import { showSuccess, showError } from "@/utils/toast";
 
@@ -43,7 +43,7 @@ export function OTPVerification({
 
   const [verifyOtp, { isLoading }] = useVerifyOtpMutation();
   const [countdown, setCountdown] = useState(countdownSeconds);
-  const [fetchProfile , { isLoading: isProfileLoading }] = useLazyGetProfileQuery();
+  const [fetchProfile, { isLoading: isProfileLoading }] = useLazyGetProfileQuery();
   const dispatch = useDispatch();
 
   const otp = watch("otp");
@@ -66,33 +66,32 @@ export function OTPVerification({
 
   const onSubmit = async (data: OTPForm) => {
     try {
-      const code = data.otp.join('');
+      const code = data.otp.join("");
       if (code.length !== 6) return;
       // 1. First verify the OTP
-      console.log(role);
       const response = await verifyOtp({
         mobile: phoneNumber,
         code,
         type,
         role,
       }).unwrap();
-      if (response.status === 'SUCCESS' && response.data) {
+      if (response.status === "SUCCESS" && response.data) {
         showSuccess("OTP verified successfully");
         const { access_token, refresh_token } = response.data;
         // 2. Store tokens
-        localStorage.setItem('accessToken', access_token as string);
-        localStorage.setItem('refreshToken', refresh_token as string);
+        localStorage.setItem("accessToken", access_token as string);
+        localStorage.setItem("refreshToken", refresh_token as string);
         // 3. Set credentials with access token
         dispatch(
           setCredentials({
             accessToken: access_token as string,
             isAuthenticated: true,
-          }) 
+          })
         );
         // 4. Fetch user profile using the query
         try {
           const profileResponse = await fetchProfile().unwrap();
-          if (profileResponse.status === 'SUCCESS' && profileResponse.data) {
+          if (profileResponse.status === "SUCCESS" && profileResponse.data) {
             showSuccess("Profile fetched successfully");
             dispatch(
               setCredentials({
@@ -102,7 +101,7 @@ export function OTPVerification({
             );
           }
         } catch (profileError) {
-          console.error('Failed to fetch user profile:', profileError);
+          console.error("Failed to fetch user profile:", profileError);
           // Even if profile fetch fails, we can still proceed
           dispatch(
             setCredentials({
@@ -113,8 +112,8 @@ export function OTPVerification({
         // 5. Call success callback
         onSuccess?.();
       }
-    } catch (error : any) {
-      console.error('OTP verification failed:', error);
+    } catch (error: any) {
+      console.error("OTP verification failed:", error);
       showError(error?.data?.message || "Something went wrong");
     }
   };
@@ -190,12 +189,12 @@ export function OTPVerification({
         <div className="space-y-3">
           <AppButton
             type="submit"
-            label={(isLoading) ? "Verifying..." : isProfileLoading ? "Getting profile..." : "Verify OTP"}
+            label={
+              isLoading ? "Verifying..." : isProfileLoading ? "Getting profile..." : "Verify OTP"
+            }
             className="from-secondary-start to-secondary-end h-12 w-full rounded-lg bg-gradient-to-r font-medium text-white"
             disabled={isLoading || isProfileLoading}
           />
-
-         
         </div>
       </form>
     </div>

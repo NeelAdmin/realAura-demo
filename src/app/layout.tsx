@@ -3,6 +3,7 @@ import "./globals.css";
 import { Navbar } from "@/components/common/Navbar";
 import { ReduxProvider } from "@/lib/providers";
 import { Toaster } from "react-hot-toast";
+import AuthInitializer from "@/app/AuthInitializer";
 
 export const metadata = {
   title: "RealAura",
@@ -14,6 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="bg-background text-foreground font-sans">
         <ReduxProvider>
+          <AuthInitializer />
           <Navbar />
           {children}
           <Toaster

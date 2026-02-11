@@ -63,23 +63,23 @@ export default function LoginForm({ open, onClose }: LoginModalProps) {
   });
 
   const selectedRole = watch("role");
+  console.log(selectedRole);
 
   const roleForApi = ROLE_OPTIONS.find((r) => r.value === selectedRole)?.apiValue;
-
+  console.log(roleForApi);
   const handleLogin = async (data: LoginFormData) => {
     try {
       const response = await loginWithMobile({
         mobile: `${data.phone}`,
         role: roleForApi as any,
       }).unwrap();
-  
+
       if (response.status === "SUCCESS") {
         showSuccess("OTP sent successfully");
         setPhoneNumber(`+91${data.phone}`);
         setShowOTP(true);
-        reset();
       }
-    } catch (error : any) {
+    } catch (error: any) {
       showError(error?.data?.message || "Something went wrong");
     }
   };
@@ -96,7 +96,10 @@ export default function LoginForm({ open, onClose }: LoginModalProps) {
               <h2 className="text-[24px] font-medium">Log in</h2>
               <button
                 type="button"
-                onClick={() => {onClose();reset()}}
+                onClick={() => {
+                  onClose();
+                  reset();
+                }}
                 className="text-gray-400 hover:text-gray-600"
                 aria-label="Close"
               >
@@ -142,7 +145,13 @@ export default function LoginForm({ open, onClose }: LoginModalProps) {
 
             <div className="mt-4 flex items-center gap-2 text-sm">
               <span>New to Realaura? </span>
-              <button onClick={() => {setShowRegister(true); reset();}} className="text-secondary-end">
+              <button
+                onClick={() => {
+                  setShowRegister(true);
+                  reset();
+                }}
+                className="text-secondary-end"
+              >
                 Create Account
               </button>
             </div>
@@ -173,7 +182,7 @@ export default function LoginForm({ open, onClose }: LoginModalProps) {
               onSuccess={() => {
                 setShowOTP(false);
                 onClose();
-                router.push("/");
+                roleForApi === "AFFILIATE" ? router.push("/") : router.push("/dashboard");
               }}
             />
           </div>

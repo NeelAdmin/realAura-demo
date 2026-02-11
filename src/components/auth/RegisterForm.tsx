@@ -65,7 +65,7 @@ export function RegisterForm({ open, onClose, onOpenLogin }: RegisterFormProps) 
   const isTenant = selectedRole === "tenant";
 
   const roleForApi = ROLE_OPTIONS.find((r) => r.value === selectedRole)?.apiValue;
-console.log(roleForApi);  
+  console.log(roleForApi);
   const onSubmit: SubmitHandler<FormData> = async (formData) => {
     try {
       const payload = {
@@ -89,9 +89,8 @@ console.log(roleForApi);
         showSuccess("User registered successfully");
         setPhoneNumber(`+91${formData.mobile}`);
         setShowOTP(true);
-        reset();
       }
-    } catch (error :any) {
+    } catch (error: any) {
       console.error(error);
       showError(error?.data?.message || "Something went wrong");
     }
@@ -116,7 +115,6 @@ console.log(roleForApi);
               >
                 <div className="flex-1 space-y-3 overflow-y-auto px-1 py-2">
                   <div>
-
                     <div className="grid grid-cols-3 gap-2">
                       {[
                         { value: "tenant", label: "Tenant" },
@@ -224,7 +222,7 @@ console.log(roleForApi);
               onSuccess={() => {
                 setShowOTP(false);
                 onClose();
-                router.push("/");
+                roleForApi === "AFFILIATE" ? router.push("/") : router.push("/dashboard");
               }}
             />
           </div>

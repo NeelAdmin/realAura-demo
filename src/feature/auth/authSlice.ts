@@ -1,5 +1,5 @@
 // src/feature/auth/authSlice.ts
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface AuthState {
   user: any | null;
@@ -11,46 +11,46 @@ interface AuthState {
 
 // Helper functions for localStorage
 const loadAuthState = (): Partial<AuthState> => {
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return {};
   }
   try {
-    const serializedState = localStorage.getItem('auth');
+    const serializedState = localStorage.getItem("auth");
     if (!serializedState) return {};
     return JSON.parse(serializedState);
   } catch (err) {
-    console.warn('Failed to load auth state from localStorage', err);
+    console.warn("Failed to load auth state from localStorage", err);
     return {};
   }
 };
 
 const saveAuthState = (state: Partial<AuthState>) => {
-  if (typeof window === 'undefined') return;
-  
+  if (typeof window === "undefined") return;
+
   try {
-    localStorage.setItem('auth', JSON.stringify({
-      user: state.user || null,
-      accessToken: state.accessToken || null,
-      isAuthenticated: state.isAuthenticated || false,
-    }));
+    localStorage.setItem(
+      "auth",
+      JSON.stringify({
+        user: state.user || null,
+        accessToken: state.accessToken || null,
+        isAuthenticated: state.isAuthenticated || false,
+      })
+    );
   } catch (err) {
-    console.warn('Failed to save auth state to localStorage', err);
+    console.warn("Failed to save auth state to localStorage", err);
   }
 };
 
-// Load initial state from localStorage
-const persistedState = loadAuthState();
-
 const initialState: AuthState = {
-  user: persistedState.user || null,
-  accessToken: persistedState.accessToken || null,
-  isAuthenticated: persistedState.isAuthenticated || false,
-  isLoading: false,
+  user: null,
+  accessToken: null,
+  isAuthenticated: false,
+  isLoading: true, // important
   error: null,
 };
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     setCredentials: (
@@ -78,8 +78,8 @@ const authSlice = createSlice({
       state.accessToken = null;
       state.isAuthenticated = false;
       // Clear auth from localStorage
-      localStorage.removeItem('auth');
-      localStorage.removeItem('refreshToken');
+      localStorage.removeItem("auth");
+      localStorage.removeItem("refreshToken");
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;

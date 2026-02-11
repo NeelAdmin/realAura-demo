@@ -41,14 +41,15 @@ export function Navbar() {
   }, []);
 
   const isHome = pathname === "/";
+  const isDashboard = pathname === "/dashboard";
   const isDesktop = !mobile;
 
-  const showBottomSection = true;
+  const showBottomSection = !isDashboard;
 
   const showSearchBelow = isHome || (!isHome && mobile);
 
-  const showDesktopFilters = isDesktop;
-  const showMobileFilters = mobile;
+  const showDesktopFilters = isDesktop && !isDashboard;
+  const showMobileFilters = mobile && !isDashboard;
 
   return (
     <>
