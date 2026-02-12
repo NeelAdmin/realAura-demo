@@ -61,6 +61,12 @@ export const SIDEBAR_CONFIG: SidebarSectionType[] = [
         roles: ["OWNER", "TENANT"],
         notificationKey: "visitCount",
       },
+      {
+        label: "Add New Property",
+        icon: Clock,
+        path: "/dashboard/owner/add-new-property",
+        roles: ["OWNER", "TENANT"],
+      },
     ],
   },
   {
