@@ -51,7 +51,7 @@ export default function DashboardPage() {
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar - Desktop */}
-      <div className="hidden md:block">
+      <div className="hidden lg:block h-screen">
         <Sidebar />
       </div>
 

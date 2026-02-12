@@ -11,20 +11,41 @@ interface StatCardProps {
 
 export default function StatCard({ title, value, icon: Icon, bgColor = "#FFDCD7" }: StatCardProps) {
   return (
-    <div className="rounded-2xl border border-gray-200 bg-gray-50 p-8 shadow-sm">
-      <div className="flex items-center gap-4">
-        <div className={`flex h-14 w-14 items-center justify-center rounded-full bg-[#FFDCD7]`}>
-          <Icon className="h-6 w-6" />
+    <div className="rounded-xl border border-gray-200 bg-gray-50 
+                p-4 sm:p-5 md:p-6 lg:p-4 
+                shadow-sm transition-all flex flex-col lg:flex-row lg:block items-center ">
+
+      <div className="flex flex-col lg:flex-row items-center 
+                  gap-3 lg:gap-2">
+
+        <div className="flex 
+                    h-12 w-12 
+                    lg:h-10 lg:w-10
+                    items-center justify-center 
+                    rounded-full bg-[#FFDCD7]">
+
+          <Icon className="h-5 w-5 lg:h-4 lg:w-4" />
         </div>
 
-        <div>
-          <p className="text-lg font-medium text-gray-600">{title}</p>
-        </div>
+        <p className="text-base 
+                  md:text-lg 
+                  lg:text-sm 
+                  font-medium text-gray-600 leading-tight">
+          {title}
+        </p>
       </div>
 
-      <div className="mt-8">
-        <h2 className="text-3xl font-bold text-gray-900">{value}</h2>
+      <div className="mt-6 lg:mt-4">
+        <h2 className="text-2xl 
+                   md:text-3xl 
+                   lg:text-xl 
+                   font-bold text-gray-900">
+          {value}
+        </h2>
       </div>
+
     </div>
+
+
   );
 }

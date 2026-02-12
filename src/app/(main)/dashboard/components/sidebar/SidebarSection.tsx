@@ -13,8 +13,8 @@ export default function SidebarSection({ section, role, notifications }: Props) 
   if (!filteredItems.length) return null;
 
   return (
-    <div className="rounded-2xl bg-white p-3 shadow-md">
-      <p className="mb-2 px-2 text-xs font-semibold text-gray-400 uppercase">{section.title}</p>
+    <div className="rounded-2xl bg-white py-3 ">
+      <p className="mb-2 px-2 text-xs font-semibold text-black uppercase">{section.title}</p>
 
       <div className="space-y-1">
         {filteredItems.map((item) => (

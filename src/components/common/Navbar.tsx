@@ -101,7 +101,7 @@ export function Navbar() {
           </div>
         </header>
 
-        <div className="items-center px-6 lg:hidden">{mobile && <NavLinks />}</div>
+{( !isDashboard && mobile) && <div className="items-center px-6 lg:hidden">{mobile && <NavLinks />}</div>}
 
         {/* LOGIN MODAL – self managed */}
         <LoginForm open={isOpen} onClose={() => setIsOpen(false)} />
