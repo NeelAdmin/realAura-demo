@@ -8,11 +8,10 @@ import {
 } from "@/feature/auth/authSlice";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Sidebar from "./components/sidebar/Sidebar";
+import DashboardNavbar from "@/components/layout/navbar/DashboardNavbar";
 
-import OwnerDashboard from "./components/ownerDashboard";
-import TenantDashboard from "./components/TenateDashboard";
-
-export default function DashboardPage() {
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const user = useSelector(selectCurrentUser);
   const isAuthenticated = useSelector(selectIsAuthenticated);
@@ -30,22 +29,17 @@ export default function DashboardPage() {
 
   if (!isAuthenticated || !user) return null;
 
-  /* -------------------- ROLE BASED DASHBOARD -------------------- */
-  const renderDashboard = () => {
-    switch (user.role) {
-      case "OWNER":
-        return <OwnerDashboard />;
-      case "TENANT":
-        return <TenantDashboard />;
-      default:
-        return (
-          <div className="flex h-screen items-center justify-center">
-            <p className="text-red-600">Unauthorized role access</p>
-          </div>
-        );
-    }
-  };
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <div className="flex">
+        {/* Sidebar - Desktop */}
+        <div className="hidden md:block">
+          <Sidebar />
+        </div>
 
-  /* -------------------- FINAL LAYOUT -------------------- */
-  return <div className="p-6">{renderDashboard()}</div>;
+        {/* Main Content */}
+        <div className="flex-1 overflow-y-auto">{children}</div>
+      </div>
+    </div>
+  );
 }

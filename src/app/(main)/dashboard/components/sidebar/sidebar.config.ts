@@ -40,7 +40,7 @@ export const SIDEBAR_CONFIG: SidebarSectionType[] = [
       {
         label: "Profile",
         icon: User,
-        path: "/profile",
+        path: "/dashboard/owner/profile",
         roles: ["OWNER", "TENANT"],
       },
     ],
@@ -51,7 +51,7 @@ export const SIDEBAR_CONFIG: SidebarSectionType[] = [
       {
         label: "Liked Properties",
         icon: Heart,
-        path: "/liked",
+        path: "/dashboard/liked",
         roles: ["OWNER", "TENANT"],
       },
       {

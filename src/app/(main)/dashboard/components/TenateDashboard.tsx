@@ -1,9 +1,10 @@
+import ProfileForm from "./owner/ProfileForm";
+
 // ownerDashboard.tsx
 export default function TenantDashboard() {
   return (
     <div>
-      <h1>Tenant Dashboard</h1>
-      {/* Owner-specific content */}
+      <ProfileForm />
     </div>
   );
 }

@@ -26,7 +26,6 @@ export function NavActions({
 
   const handleLogout = () => {
     dispatch(logout());
-    // Optional: redirect to home page or refresh
     window.location.href = "/";
   };
 
@@ -52,6 +51,12 @@ export function NavActions({
           onClick={() => setIsOpen(true)}
         >
           LOGIN
+        </button>
+      )}
+
+      {isAuthenticated && (
+        <button className="text-primary px-4 py-2 text-[14px] font-bold" onClick={handleLogout}>
+          LOGOUT
         </button>
       )}
     </div>
