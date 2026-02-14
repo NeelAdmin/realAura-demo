@@ -4,32 +4,61 @@ import { Navbar } from "@/components/common/Navbar";
 import { ReduxProvider } from "@/lib/providers";
 import { Toaster } from "react-hot-toast";
 import AuthInitializer from "@/app/AuthInitializer";
+import ConditionalNavbar from "@/components/common/ConditionalNavbar";
 
-export const metadata = {
-  title: "RealAura",
-  description: "Real estate platform",
-};
+// export const metadata = {
+//   title: "RealAura",
+//   description: "Real estate platform",
+// };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+// export default function RootLayout({ children }: { children: React.ReactNode }) {
+//   return (
+//     <html lang="en">
+//       <body className="bg-background text-foreground font-sans">
+//         <ReduxProvider>
+//           <AuthInitializer />
+//           <Navbar />
+//           {children}
+//           <Toaster
+//             position="top-right"
+//             toastOptions={{
+//               style: {
+//                 borderRadius: "8px",
+//                 padding: "12px 16px",
+//                 fontSize: "14px",
+//                 boxShadow: "0px 4px 8px rgba(0,0,0,0.05)",
+//               },
+//             }}
+//           />
+//           <Footer />
+//         </ReduxProvider>
+//       </body>
+//     </html>
+//   );
+// }
+
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
-      <body className="bg-background text-foreground font-sans">
+      <body className="bg-background text-foreground font-sans min-h-screen flex flex-col">
         <ReduxProvider>
           <AuthInitializer />
-          <Navbar />
-          {children}
-          <Toaster
-            position="top-right"
-            toastOptions={{
-              style: {
-                borderRadius: "8px",
-                padding: "12px 16px",
-                fontSize: "14px",
-                boxShadow: "0px 4px 8px rgba(0,0,0,0.05)",
-              },
-            }}
-          />
+
+          {/* Navbar should hide on dashboard */}
+          <ConditionalNavbar />
+
+          <main className="flex-1">
+            {children}
+          </main>
+
           <Footer />
+
+          <Toaster position="top-right" />
         </ReduxProvider>
       </body>
     </html>

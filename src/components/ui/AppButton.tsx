@@ -1,5 +1,6 @@
 import * as React from "react"
 import { cn } from "@/lib/cn"
+import { ReactNode } from "react";
 
 export type AppButtonProps = {
   label: string
@@ -8,6 +9,7 @@ export type AppButtonProps = {
   disabled?: boolean
   className?: string
   type?: "button" | "submit" | "reset"
+  icon?: ReactNode;
   variant?:
   | "gradient"
   | "outline-gradient"
@@ -25,6 +27,7 @@ export function AppButton({
   className,
   type = "button",
   variant = "gradient",
+  icon,
 }: AppButtonProps) {
   const isOutlineGradient = variant === "outline-gradient"
   const isPill = variant.startsWith("pill")
@@ -35,7 +38,7 @@ export function AppButton({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        "relative inline-flex items-center justify-center",
+        "relative inline-flex items-center justify-center gap-2",
         "transition-all duration-200",
         "disabled:opacity-50 disabled:cursor-not-allowed",
 
@@ -95,6 +98,7 @@ export function AppButton({
         className
       )}
     >
+      {icon && <span className="flex-shrink-0">{icon}</span>}
       {/* Chip (unchanged behavior) */}
       {chipText && !isPill && (
         <span

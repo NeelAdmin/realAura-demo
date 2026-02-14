@@ -67,11 +67,29 @@ export const SIDEBAR_CONFIG: SidebarSectionType[] = [
         path: "/dashboard/owner/add-new-property",
         roles: ["OWNER", "TENANT"],
       },
+      {
+        label: "My Properties",
+        icon: Clock,
+        path: "/dashboard/owner/my-properties",
+        roles: ["OWNER", "TENANT"],
+      },
+      {
+        label:"Pending Properties",
+        icon:Clock,
+        path:"/dashboard/owner/pending-properties",
+        roles:["OWNER", "TENANT"],
+      }
     ],
   },
   {
     title: "Document",
     items: [
+      {
+        label:"Add Document",
+        icon:FileCheck,
+        path:"/dashboard/owner/document",
+        roles:["OWNER", "TENANT"],
+      },
       {
         label: "Document Verification",
         icon: FileCheck,

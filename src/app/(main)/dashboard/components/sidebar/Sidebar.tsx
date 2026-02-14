@@ -51,7 +51,7 @@ const Sidebar = ({ notifications, isMobile, onClose }: Props) => {
 
   return (
     <aside
-      className={`relative w-72 overflow-y-auto bg-white py-4 shadow-[0px_8px_10px_-6px_rgba(0,0,0,0.1),0px_20px_25px_-5px_rgba(0,0,0,0.1)] ${isMobile ? "h-full" : "h-screen"} `}
+      className={`relative w-60 overflow-y-auto bg-white py-4 shadow-[0px_8px_10px_-6px_rgba(0,0,0,0.1),0px_20px_25px_-5px_rgba(0,0,0,0.1)] ${isMobile ? "h-full" : "h-screen"} `}
     >
       {/* Close button only for mobile */}
       {isMobile && (
