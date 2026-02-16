@@ -57,7 +57,7 @@ export const SIDEBAR_CONFIG: SidebarSectionType[] = [
       {
         label: "Schedule Visit History",
         icon: Clock,
-        path: "/visit-history",
+        path: "/dashboard/owner/visit-history",
         roles: ["OWNER", "TENANT"],
         notificationKey: "visitCount",
       },
@@ -93,7 +93,7 @@ export const SIDEBAR_CONFIG: SidebarSectionType[] = [
       {
         label: "Document Verification",
         icon: FileCheck,
-        path: "/document-verification",
+        path: "/dashboard/owner/verified-documents",
         roles: ["OWNER", "TENANT"],
       },
       {
@@ -110,7 +110,7 @@ export const SIDEBAR_CONFIG: SidebarSectionType[] = [
       {
         label: "Payment History",
         icon: IndianRupee,
-        path: "/payment-history",
+        path: "/dashboard/owner/payment-history",
         roles: ["OWNER", "TENANT"],
       },
     ],

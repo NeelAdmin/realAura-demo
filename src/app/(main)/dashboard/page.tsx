@@ -47,5 +47,5 @@ export default function DashboardPage() {
   };
 
   /* -------------------- FINAL LAYOUT -------------------- */
-  return <div className="p-6">{renderDashboard()}</div>;
+  return <div>{renderDashboard()}</div>;
 }
